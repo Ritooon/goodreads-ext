@@ -17,3 +17,77 @@
     overflow: hidden;
     text-overflow: ellipsis; */
 }
+
+
+/* Testing CSS improvements */
+main {
+    width: 99.5% !important;
+}
+
+.homeSecondaryColumn, .homeTertiaryColumn {
+    min-width: 300px !important;
+    width: 22% !important;
+}
+
+.homePrimaryColumn {
+    min-width: 540px !important;
+    width: 50% !important;
+}
+
+.mainContentContainer { width: 99% !important; }
+
+.mainContentFloat .leftContainer {
+    width: calc(100% - 350px) !important;
+}
+
+.coverBigBox .coverRow { text-align: center !important; }
+
+.coverBigBox .leftAlignedImage {
+    width: 200px !important;
+    display: inline-block !important;
+    float: none !important;
+}
+
+.listRowsFull .row, .coverBigBox .leftAlignedImage  { 
+    text-align: center !important;
+}
+
+.listRowsFull .cell {
+    display: inline-block !important;
+    float: none !important;
+}
+
+.listImgs {
+    height: 160px !important;
+}
+
+.listImgs img {
+    width: 110px !important;
+    height: 160px !important;
+}
+
+.listRowsFull .cell { width: auto !important; }
+
+.coverBigBox .ratingBelowCovers .coverWrapper {
+    display: inline-block !important;
+}
+
+.coverBigBox .listViewBox .bookInformation {
+    width: 83% !important;
+}
+
+.coverBigBox .listViewBox .coverWrapper, .coverBigBox .listViewBox .bookInformation,
+.coverBigBox .listViewBox .addBook {
+    margin-top: 10px !important;
+}
+
+
+@media (min-width: 1200px) {
+    html.withSiteHeaderTopFullImage .primaryNavMenu__menu {
+        top:50px !important;
+    }
+}
+
+.leftContainer .bigBox .bigBoxAncillaryData, .bigBox .updatedTimestamp {
+    float: none !important;
+}

@@ -56,7 +56,7 @@ function setExpanded() {
 				link.href += '?expanded=true&per_page=100';
 			}
 		});
-	}, 200);
+	}, 500);
 }
 
 function setCoverTitle(reset) {
@@ -92,6 +92,10 @@ function setCoverTitle(reset) {
 
 
 function hideAnnoucements() {
+	if(document.querySelector('.siteHeader__topFullImageContainer') != null && document.querySelector('.siteHeader__topFullImageContainer') != 'null') {
+		document.querySelector('.siteHeader__topFullImageContainer').style.display = 'none';
+	}
+
 	if(document.querySelector('.SiteHeaderBanner') != null && document.querySelector('.SiteHeaderBanner') != 'null') {
 		document.querySelector('.SiteHeaderBanner').style.display = 'none';
 	}
