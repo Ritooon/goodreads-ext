@@ -1,0 +1,64 @@
+#ext-container {
+    width: 500px;
+}
+
+.text-green { color: #63b663; }
+.text-blue { color: #628fff; }
+.bg-green { background-color: #63b663; }
+.bg-red { background-color: #db4949; }
+
+input {
+    padding: 5px 8px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+}
+
+.btn {
+    color: white;
+    border: none;
+    border-radius: 3px;
+    padding: 5px 15px;
+    cursor: pointer;
+}
+
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+table td, table th {
+    border: 1px solid #ddd;
+    padding: 4px;
+}
+
+table th {
+    padding: 5px 10px;
+    text-align: left;
+    background-color: #04AA6D;
+    color: white;
+}
+
+.checkbox:checked {
+    background-color: rgb(63 103 57);
+    border-color: rgb(56 101 49);
+    background-image: url("../img/check.svg");
+}
+
+.checkbox {
+    width: 1em;
+    height: 1.3em;
+    margin-top: .25em;
+    vertical-align: middle;
+    background-color: #fff;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    border: 1px solid rgba(0, 0, 0, .25);
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+}
+    
+table tr:nth-child(even){ background-color: #f2f2f2; }
+table tr:hover { background-color: #ddd; }

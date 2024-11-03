@@ -1,0 +1,25 @@
+{
+    "manifest_version": 3,
+    "name": "Goodreads Enhancer",
+    "description": "Some Goodreads enhancement", 
+    "version": "0.1",
+    "permissions": [ 
+        "activeTab",
+        "storage"
+    ],
+    "action": {
+        "default_icon" : "assets/img/icon.png", 
+        "default_popup": "popup.html" 
+    },
+    "icons": {
+        "128" : "assets/img/icon_128.png"
+    },
+    "content_scripts": [
+        {
+            "matches": ["https://www.goodreads.com/*"],
+            "css": ["assets/css/enhancer.css"],
+            "js": ["assets/js/enhancer.js"],
+            "runAt": "document_idle"
+        }
+      ]
+}

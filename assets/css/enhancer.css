@@ -1,0 +1,19 @@
+.covers .bookalike {
+    height: auto !important;
+    display: inline-block !important;
+    vertical-align: top !important;
+    float: none !important;
+}
+
+#rightCol {
+    width: calc(100% - 250px) !important;
+}
+
+.mainContent, .mainContentFloat, #leadercol { width: 100% !important; } 
+
+.div-title-ext { 
+    width: 100%;
+    /* white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis; */
+}
