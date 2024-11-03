@@ -50,11 +50,8 @@ function setExpanded() {
 		let editionLinks = document.querySelectorAll('a.Button');
 		let tooltipID, matches;
 	
-		console.log('here')
-		console.log(editionLinks)
 		// Loop each tooltips to find
 		editionLinks.forEach(function(link, index) {
-			console.log(link)
 			if(link.href.indexOf('editions')) {
 				link.href += '?expanded=true&per_page=100';
 			}
