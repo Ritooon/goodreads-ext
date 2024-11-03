@@ -1,11 +1,14 @@
 var opts = [];
 
 // Observer : Reload when infinite scroll
-const observer = new MutationObserver(() => {
-	setOptions(true);
-});
+if(document.getElementById('booksBody') != null && document.getElementById('booksBody') != 'null') {
 
-observer.observe(document.getElementById("booksBody"), { childList: true });
+	const observer = new MutationObserver(() => {
+		setOptions(true);
+	});
+
+	observer.observe(document.getElementById("booksBody"), { childList: true });
+}
 
 // to initialize the all data using the storage
 chrome.storage.sync.get('opts', function(data) {
@@ -35,21 +38,28 @@ function setOptions(reset = false) {
 		} else if(option.opt == 'titleCoverGrid' && option.value == true) {
 			setCoverTitle(reset);
 		}  else if(option.opt == 'hideAnnouncements' && option.value == true) {
-			hideAnnoucements();
+			if(!reset) {
+				hideAnnoucements();
+			}
 		}
 	});
 }
 
 function setExpanded() {
-	let editionLinks = document.querySelectorAll('a.Button--tertiary');
-	let tooltipID, matches;
-
-	// Loop each tooltips to find
-	editionLinks.forEach(function(link, index) {
-		if(link.href.indexOf('editions')) {
-			link.href += '?expanded=true&per_page=100';
-		}
-	});
+	setTimeout(function(){
+		let editionLinks = document.querySelectorAll('a.Button');
+		let tooltipID, matches;
+	
+		console.log('here')
+		console.log(editionLinks)
+		// Loop each tooltips to find
+		editionLinks.forEach(function(link, index) {
+			console.log(link)
+			if(link.href.indexOf('editions')) {
+				link.href += '?expanded=true&per_page=100';
+			}
+		});
+	}, 200);
 }
 
 function setCoverTitle(reset) {
@@ -85,5 +95,7 @@ function setCoverTitle(reset) {
 
 
 function hideAnnoucements() {
-	document.querySelector('.siteHeader__topFullImage').remove();
+	if(document.querySelector('.SiteHeaderBanner') != null && document.querySelector('.SiteHeaderBanner') != 'null') {
+		document.querySelector('.SiteHeaderBanner').style.display = 'none';
+	}
 }
