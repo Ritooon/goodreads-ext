@@ -29,7 +29,11 @@
 
 /* GENERAL */
 
-.Button--secondary {
+.Header__siteHeaderBanner { 
+    height: 5rem !important;
+}
+
+/* .Button--secondary {
     border: none !important;
     border-bottom: 1px solid !important;
     border-radius: 0 !important;
@@ -47,10 +51,10 @@
 
 button {
     border-radius: 0px !important;
-}
+} */
 
 /*  */
-
+/* 
 #rightCol {
     width: calc(100% - 250px) !important;
 }
@@ -59,13 +63,10 @@ button {
 
 .div-title-ext { 
     width: 100%;
-    /* white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis; */
-}
+} */
 
 /* Testing CSS improvements */
-main {
+/* main {
     width: 99.5% !important;
 }
 
@@ -135,4 +136,4 @@ main {
 
 .leftContainer .bigBox .bigBoxAncillaryData, .bigBox .updatedTimestamp {
     float: none !important;
-}
+} */

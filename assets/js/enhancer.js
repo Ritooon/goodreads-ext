@@ -24,7 +24,9 @@ function getOptions(reset = false) {
 				}
 			}
 
-			setOptions(reset);
+			setTimeout(() => {
+				setOptions(reset);
+			}, 200);
 		}
 	});
 }
@@ -59,7 +61,7 @@ function setOptions(reset = false) {
 	}
 }
 
-function setExpanded() {
+function setExpanded(expand) {
 	setTimeout(function(expand){
 		let editionLinks = document.querySelectorAll('a.Button');
 		let tooltipID, matches;
@@ -141,7 +143,10 @@ function hideHomeElements(el, hide) {
 		div.closest('footer').style.display = styleDisplay;
 	} else if(el === 'hideHomeImproveRecommendation') {
 		let div = Array.from(document.querySelectorAll('h3')).find(el => el.textContent === 'Improve Recommendations');
-		div.closest('.gr-homePageRailContainer').style.display = styleDisplay;
+		console.log(div)
+		if(div != null && div != 'null') {
+			div.closest('.gr-homePageRailContainer').style.display = styleDisplay;
+		}
 	} else if(el === 'hideHomeBookshelves') {
 		let div = document.querySelector('.'+arrayHomeElements[el]);
 		div.closest('.showForLargeWidth').style.display = styleDisplay;
@@ -154,5 +159,6 @@ function hideHomeElements(el, hide) {
 function bookDetailsEnhancement() {
 	Array.from(document.querySelectorAll('.Button__labelItem')).find(el => el.textContent === 'Show more').closest('button').click();
 	Array.from(document.querySelectorAll('.Button__labelItem')).find(el => el.textContent === '...more').closest('button').click();
+	document.querySelector('body').click();
 }
 	
