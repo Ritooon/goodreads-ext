@@ -1,24 +1,67 @@
 <link rel="stylesheet" type="text/css" href="assets/css/config.css" />
-<link rel="stylesheet" type="text/css" href="libs/fontawesome/css/all.min.css" />
 <meta charset="UTF-8">
 
+<h1>Options</h1>
+
 <div id="ext-container">
-    <h1>
-        Options
-        <!-- <i id="saveIndicator" class="fa-solid fa-check float-right text-gr"></i> -->
-    </h1>
-    <div>
-        <input type="checkbox" class="checkbox opt-checkbox" name="expandDetailsCheck" id="0" />
-        Editions : always expand details
+    <div class="config-blog">
+        <div>
+            <input type="checkbox" class="checkbox opt-checkbox" name="expandDetailsCheck" id="expandDetailsCheck" />
+            <b>Editions :</b> always expand details
+        </div>
+        <div>
+            <input type="checkbox" class="checkbox opt-checkbox" name="titleCoverGrid" id="titleCoverGrid" />
+            <b>Collection grid :</b> display title under cover
+        </div>
+        
     </div>
-    <div>
-        <input type="checkbox" class="checkbox opt-checkbox" name="titleCoverGrid" id="1" />
-        Collection grid : display title under cover
+
+    <div class="config-blog">
+        <h2>Hide elements</h2>
+        <h4>General</h4>
+        <div>
+            <input type="checkbox" class="checkbox opt-checkbox" name="hideAnnouncements" id="hideAnnouncements" />
+            Goodreads top bar annoucements
+        </div>
+        <h4>Home</h4>
+        <div>
+            <input type="checkbox" class="checkbox opt-checkbox" name="hideHomeCurrentlyReading" id="hideHomeCurrentlyReading" />
+            Currently reading
+        </div>
+        <div>
+            <input type="checkbox" class="checkbox opt-checkbox" name="hideHomeReadingChallenge" id="hideHomeReadingChallenge" />
+            Reading challenge
+        </div>
+        <div>
+            <input type="checkbox" class="checkbox opt-checkbox" name="hideHomeWantToRead" id="hideHomeWantToRead" />
+            Want to read
+        </div>
+        <div>
+            <input type="checkbox" class="checkbox opt-checkbox" name="hideHomeBookshelves" id="hideHomeBookshelves" />
+            Bookshelves
+        </div>
+        <div>
+            <input type="checkbox" class="checkbox opt-checkbox" name="hideHomeNewsInterviews" id="hideHomeNewsInterviews" />
+            News & interviews
+        </div>
+        <div>
+            <input type="checkbox" class="checkbox opt-checkbox" name="hideHomeRecommendation" id="hideHomeRecommendation" />
+            Recommendations
+        </div>
+        <div>
+            <input type="checkbox" class="checkbox opt-checkbox" name="hideHomeImproveRecommendation" id="hideHomeImproveRecommendation" />
+            Improve recommendations
+        </div>
+        <div>
+            <input type="checkbox" class="checkbox opt-checkbox" name="hideHomeChoiceAwards" id="hideHomeChoiceAwards" />
+            Goodreads choice awards
+        </div>
+        <div>
+            <input type="checkbox" class="checkbox opt-checkbox" name="hideHomeCompanyInfo" id="hideHomeCompanyInfo" />
+            Goodreads company information
+        </div>
     </div>
-    <div>
-        <input type="checkbox" class="checkbox opt-checkbox" name="hideAnnouncements" id="2" />
-        Website : Hide goodreads top bar annoucements
-    </div>
+    
 
 </div>
 <script src="assets/js/config.js"></script>
