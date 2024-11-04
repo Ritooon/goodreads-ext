@@ -10,7 +10,13 @@ if(document.getElementById('booksBody') != null && document.getElementById('book
 	observer.observe(document.getElementById("booksBody"), { childList: true });
 }
 
-getOptions(false);
+document.onreadystatechange = function () {
+	if (document.readyState === "complete") {
+		console.log('Goodreads enhancer - Loading preferences');
+		getOptions(false);
+	}
+};
+
 
 // to initialize the all data using the storage
 function getOptions(reset = false) {
@@ -45,7 +51,9 @@ function setOptions(reset = false) {
 		if(opt == 'expandDetailsCheck') {
 			setExpanded(value);
 		} else if(opt == 'titleCoverGrid') {
-			setCoverTitle(reset, value);
+			if(uri[1] === 'review') {
+				setCoverTitle(reset, value);
+			}
 		}  else if(opt == 'hideAnnouncements') {
 			hideAnnoucements(value);
 		} else if(opt.indexOf('hideHome' > -1) ) {
@@ -84,6 +92,10 @@ function setCoverTitle(reset, displayTitles) {
 	if(!displayTitles) {
 		document.querySelectorAll('.div-title-ext').remove();
 	} else {
+
+		document.querySelector('.mainContent').classList.add('gr-ext-mybooks');
+
+
 		if(document.getElementById('books') != null && document.getElementById('books') != 'null') {
 		
 			if(document.getElementById('books').classList.value.indexOf('covers') > -1) {
@@ -143,7 +155,7 @@ function hideHomeElements(el, hide) {
 		div.closest('footer').style.display = styleDisplay;
 	} else if(el === 'hideHomeImproveRecommendation') {
 		let div = Array.from(document.querySelectorAll('h3')).find(el => el.textContent === 'Improve Recommendations');
-		console.log(div)
+
 		if(div != null && div != 'null') {
 			div.closest('.gr-homePageRailContainer').style.display = styleDisplay;
 		}
@@ -157,8 +169,20 @@ function hideHomeElements(el, hide) {
 }
 
 function bookDetailsEnhancement() {
+	// Display entire summary
 	Array.from(document.querySelectorAll('.Button__labelItem')).find(el => el.textContent === 'Show more').closest('button').click();
+	// Display all genres
 	Array.from(document.querySelectorAll('.Button__labelItem')).find(el => el.textContent === '...more').closest('button').click();
-	document.querySelector('body').click();
+	// Inject new class to manipulate the DOM style of book page
+	document.querySelector('.PageFrame.PageFrame--siteHeaderBanner').classList.add('gr-ext-bookpage');
+	// 
+	let secondRightDiv = document.createElement('div');
+	secondRightDiv.classList.add('secondRightDiv');
+	document.querySelector('.BookPage__rightColumn').after(secondRightDiv);
+	document.querySelector('.secondRightDiv').append(document.querySelector('.AuthorPreview').closest('.PageSection'));
+	document.querySelector('.secondRightDiv').append(document.querySelector('.BookPage__relatedBottomContent'));
+	document.querySelector('.secondRightDiv').append(document.querySelector('.BookPage__relatedTopContent'));
+	
+	
 }
 	

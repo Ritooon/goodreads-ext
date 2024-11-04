@@ -1,4 +1,10 @@
 /* MY BOOKS */
+
+.gr-ext-mybooks.mainContent { width: 100% !important; }
+.gr-ext-mybooks .mainContentFloat { width: 99% !important; }
+.gr-ext-mybooks #leadercol { width: 100% !important; }
+.gr-ext-mybooks #rightCol { width: calc(100% - 210px) !important; }
+
 .covers .bookalike {
     height: auto !important;
     display: inline-block !important;
@@ -26,13 +32,50 @@
 
 /* BOOK DETAILS */
 
+.gr-ext-bookpage {
+    width: 99% !important;
+    max-width: initial !important;
+    padding-top: 6.6rem !important;
+}
+
+.gr-ext-bookpage .BookCover__image {
+    width: 80%;
+    margin: auto;
+}
+
+.gr-ext-bookpage .BookPage__leftColumn .Sticky {
+    top: auto !important;
+}
+
+.gr-ext-bookpage .BookPage__rightColumn {
+    grid-column: span var(--num-custom-col-5) !important;
+}
+
+.secondRightDiv {
+    grid-column: span var(--num-custom-col-4);
+}
+
+@media only screen and (min-width: 64em) {
+    :root {
+        --num-custom-col-5: 5;
+        --num-custom-col-4: 4;
+    }
+}
 
 /* GENERAL */
 
 .Header__siteHeaderBanner { 
     height: 5rem !important;
+    min-height: 50px !important;
 }
 
+.Button--secondary:active, .Button--secondary:focus, .Button--tag:active, .Button--tag:focus, .Button--tertiary:active, .Button--tertiary:focus {
+    box-shadow: none !important; 
+}
+
+:focus-visible {
+    outline: none !important;
+}
 /* .Button--secondary {
     border: none !important;
     border-bottom: 1px solid !important;
