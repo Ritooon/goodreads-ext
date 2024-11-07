@@ -39,12 +39,12 @@
 }
 
 .gr-ext-bookpage .BookCover__image {
-    width: 80%;
+    width: 70%;
     margin: auto;
 }
 
 .gr-ext-bookpage .BookPage__leftColumn .Sticky {
-    top: auto !important;
+    top: 60px !important;
 }
 
 .gr-ext-bookpage .BookPage__rightColumn {
@@ -62,11 +62,26 @@
     }
 }
 
+.PageFrame__main.BookPage .BookDiscussions {
+    width: 60% !important;
+    margin: auto !important;
+}
+
+/* HOME PAGE */
+
+.gr-homePageBody main { width: 100% !important; }
+.homeSecondaryColumn, .homeTertiaryColumn { width: 25% !important; }
+.homePrimaryColumn { width: 45% !important; }
+
 /* GENERAL */
 
 .Header__siteHeaderBanner { 
     height: 5rem !important;
     min-height: 50px !important;
+}
+
+.Header__logo:focus {
+    box-shadow: none !important;
 }
 
 .Button--secondary:active, .Button--secondary:focus, .Button--tag:active, .Button--tag:focus, .Button--tertiary:active, .Button--tertiary:focus {
@@ -76,107 +91,3 @@
 :focus-visible {
     outline: none !important;
 }
-/* .Button--secondary {
-    border: none !important;
-    border-bottom: 1px solid !important;
-    border-radius: 0 !important;
-    height: 20px !important;
-    padding: 15px !important;
-    width: 200px !important;
-    margin: auto !important;
-}
-
-.Button--buy {
-    border-radius: 0px !important;
-    background-color: #409970 !important;
-    color: white !important;
-}
-
-button {
-    border-radius: 0px !important;
-} */
-
-/*  */
-/* 
-#rightCol {
-    width: calc(100% - 250px) !important;
-}
-
-.mainContent, .mainContentFloat, #leadercol { width: 100% !important; } 
-
-.div-title-ext { 
-    width: 100%;
-} */
-
-/* Testing CSS improvements */
-/* main {
-    width: 99.5% !important;
-}
-
-.homeSecondaryColumn, .homeTertiaryColumn {
-    min-width: 300px !important;
-    width: 22% !important;
-}
-
-.homePrimaryColumn {
-    min-width: 540px !important;
-    width: 50% !important;
-}
-
-.mainContentContainer { width: 99% !important; }
-
-.mainContentFloat .leftContainer {
-    width: calc(100% - 350px) !important;
-}
-
-.coverBigBox .coverRow { text-align: center !important; }
-
-.coverBigBox .leftAlignedImage {
-    width: 200px !important;
-    display: inline-block !important;
-    float: none !important;
-}
-
-.listRowsFull .row, .coverBigBox .leftAlignedImage  { 
-    text-align: center !important;
-}
-
-.listRowsFull .cell {
-    display: inline-block !important;
-    float: none !important;
-}
-
-.listImgs {
-    height: 160px !important;
-}
-
-.listImgs img {
-    width: 110px !important;
-    height: 160px !important;
-}
-
-.listRowsFull .cell { width: auto !important; }
-
-.coverBigBox .ratingBelowCovers .coverWrapper {
-    display: inline-block !important;
-}
-
-.coverBigBox .listViewBox .bookInformation {
-    width: 83% !important;
-}
-
-.coverBigBox .listViewBox .coverWrapper, .coverBigBox .listViewBox .bookInformation,
-.coverBigBox .listViewBox .addBook {
-    margin-top: 10px !important;
-}
-
-
-@media (min-width: 1200px) {
-    html.withSiteHeaderTopFullImage .primaryNavMenu__menu {
-        top:50px !important;
-    }
-}
-
-.leftContainer .bigBox .bigBoxAncillaryData, .bigBox .updatedTimestamp {
-    float: none !important;
-} */

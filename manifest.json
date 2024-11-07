@@ -4,7 +4,6 @@
     "description": "Some Goodreads enhancement", 
     "version": "0.1.4",
     "permissions": [ 
-        "activeTab",
         "storage"
     ],
     "action": {
