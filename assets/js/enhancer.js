@@ -142,14 +142,15 @@ function hideAnnoucements(hide) {
 		document.querySelector('.siteHeader__topFullImageContainer').style.display = styleDisplay;
 	}
 
-	if(document.querySelector('.SiteHeaderBanner') != null && document.querySelector('.SiteHeaderBanner') != 'null') {
-		document.querySelector('.SiteHeaderBanner').style.display = styleDisplay;
+	let siteHeaderEl = document.querySelector('.SiteHeaderBanner');
+	if(itExists(siteHeaderEl)) {
+			document.querySelector('.SiteHeaderBanner').style.display = styleDisplay;
 	}
 }
 
 function hideHomeElements(el, hide) {
 
-	const arrayHomeElements = { 'hideHomeCurrentlyReading' : 'currentlyReadingShelf', 'hideHomeReadingChallenge' : 'readingChallenge__edit' ,
+	const arrayHomeElements = { 'hideHomeCurrentlyReading' : 'currentlyReadingShelf', 'hideHomeReadingChallenge' : 'readingChallenge' ,
 		'hideHomeWantToRead' : 'shelfDisplay__bookCoverLink', 'hideHomeBookshelves' : 'userShelvesBookCounts', 'hideHomeNewsInterviews' : 'gr-editorialBlogPost', 
 		'hideHomeRecommendation' : 'recommendationsWidget', 'hideHomeChoiceAwards' : 'choiceWidget'
 	};
@@ -158,29 +159,37 @@ function hideHomeElements(el, hide) {
 
 	if(el === 'hideHomeCompanyInfo') {
 		let div = document.querySelector('.gr-footer__siteLinks');
-		div.closest('footer').style.display = styleDisplay;
+		if(itExists(div)) {
+			div.closest('footer').style.display = styleDisplay;
+		}
 	} else if(el === 'hideHomeImproveRecommendation') {
 		let div = Array.from(document.querySelectorAll('h3')).find(el => el.textContent === 'Improve Recommendations');
 
-		if(div != null && div != 'null') {
+		if(itExists(div)) {
 			div.closest('.gr-homePageRailContainer').style.display = styleDisplay;
 		}
 	} else if(el === 'hideHomeBookshelves') {
 		let div = document.querySelector('.'+arrayHomeElements[el]);
-		div.closest('.showForLargeWidth').style.display = styleDisplay;
+		if(itExists(div)) {
+			div.closest('.showForLargeWidth').style.display = styleDisplay;
+		}
 	}  else if(el === 'hideHomeSitesAnnouncements') {
 		document.querySelector('.siteAnnouncement').style.display = styleDisplay;
 	} else {
 		let div = document.querySelector('.'+arrayHomeElements[el]);
-		div.closest('.gr-homePageRailContainer').style.display = styleDisplay;
+		if(itExists(div)) {
+			div.closest('.gr-homePageRailContainer').style.display = styleDisplay;
+		}
 	}
 }
 
 function bookDetailsEnhancement() {
 	// Display entire summary
-	Array.from(document.querySelectorAll('.BookPageMetadataSection .Button__labelItem')).find(el => el.textContent === 'Show more').closest('button').click();
+	let showMoreEl = Array.from(document.querySelectorAll('.BookPageMetadataSection .Button__labelItem')).find(el => el.textContent === 'Show more'); 
+	if(itExists(showMoreEl)) { showMoreEl.closest('button').click(); }
 	// Display all genres
-	Array.from(document.querySelectorAll('.Button__labelItem')).find(el => el.textContent === '...more').closest('button').click();
+	let AllGenresEl = Array.from(document.querySelectorAll('.Button__labelItem')).find(el => el.textContent === '...more');
+	if(itExists(AllGenresEl)) { AllGenresEl.closest('button').click(); }
 	// Inject new class to manipulate the DOM style of book page
 	document.querySelector('.PageFrame.PageFrame--siteHeaderBanner').classList.add('gr-ext-bookpage');
 	// 
@@ -192,6 +201,18 @@ function bookDetailsEnhancement() {
 	document.querySelector('.secondRightDiv').append(document.querySelector('.BookPage__relatedTopContent'));
 	
 	// Trigger scroll 1px to trigger lazyload to load content after moving elements
-	window.scrollTo(0, 1);
+	setTimeout(() => {
+		window.scrollTo(0, 1);	
+		window.scrollTo(0, 0);	
+	}, 500);
 }
 	
+
+function itExists(el) {
+	if(typeof el !== 'undefined' && typeof el !== undefined && typeof el !== 'null' && typeof el !== null
+		&& el !== 'null' && el !== null) {
+			return true;
+		}
+
+		return false;
+}

@@ -2,8 +2,12 @@
 
 .gr-ext-mybooks.mainContent { width: 100% !important; }
 .gr-ext-mybooks .mainContentFloat { width: 99% !important; }
-.gr-ext-mybooks #leadercol { width: 100% !important; }
+.gr-ext-mybooks #leadercol { 
+    width: 100% !important; 
+    padding-left: 15px;
+}
 .gr-ext-mybooks #rightCol { width: calc(100% - 210px) !important; }
+.gr-ext-mybooks #sidewrapper { padding-left: 15px; }
 
 .covers .bookalike {
     height: auto !important;
@@ -44,7 +48,7 @@
 }
 
 .gr-ext-bookpage .BookPage__leftColumn .Sticky {
-    top: 60px !important;
+    top: 66px !important;
 }
 
 .gr-ext-bookpage .BookPage__rightColumn {
@@ -90,4 +94,8 @@
 
 :focus-visible {
     outline: none !important;
+}
+
+.content {
+    min-height: 101% !important;
 }
