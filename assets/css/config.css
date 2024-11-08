@@ -1,6 +1,41 @@
+@import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,700,700i');
+@import url('https://fonts.googleapis.com/css?family=Bree+Serif');
+
 #ext-container {
     width: 500px;
+    min-height: 350px;
 }
+
+html {
+    background-color: #1A3636;
+    color: #a4b2a6;
+}
+
+h1 {
+    text-align: center;
+    color: #e97b4c;
+    margin: 0;
+    font-family: 'Bree Serif', serif;
+    font-size: 36px;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    padding: 10px;
+    background: #efefef;
+    font-family: 'Source Sans Pro', sans-serif;
+    color: #333;
+}
+
+@media (min-width: 600px) {
+    body {
+        padding: 60px 10px;
+    }
+}
+
 
 .text-green { color: #63b663; }
 .text-blue { color: #628fff; }
@@ -21,8 +56,17 @@ input {
     cursor: pointer;
 }
 
+.colorpicker {
+    padding: 0px;
+    height: 30px;
+    width: 30px;
+    vertical-align: middle;
+    border-radius: 50%;
+    border: none;
+    outline: none;
+}
 
-table {
+/* table {
     width: 100%;
     border-collapse: collapse;
 }
@@ -37,7 +81,7 @@ table th {
     text-align: left;
     background-color: #04AA6D;
     color: white;
-}
+} */
 
 .checkbox:checked {
     background-color: rgb(63 103 57);
@@ -62,3 +106,55 @@ table th {
     
 table tr:nth-child(even){ background-color: #f2f2f2; }
 table tr:hover { background-color: #ddd; }
+
+/*  */
+
+p {padding: 0 1em;}
+
+opt-container {
+	display: grid;
+	margin-top: 15px;
+	grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+	grid-template-rows: auto 1fr;
+	border: solid rgba(255,255,255,0.03);
+	border-radius: .5em;
+}
+
+input.opt-radio-menu {display: none;}
+input.opt-radio-menu:checked + label {
+    color: white;
+	background-color:#e97b4c;
+	transition: all 250ms;
+}
+label.opt-radio-menu-label {
+	cursor: pointer;
+	transition: color 250ms;
+	padding: 1em;
+    border: solid 1px #e97b4c4d;
+	text-align: center;
+	transition: all 250ms;
+}
+label.opt-radio-menu-label:hover {
+	background-color:#e97b4c94;
+}
+
+opt-container opt-content {
+	display: grid;
+	grid-column: 1 / -1;
+    margin-top: 15px;
+}
+
+input#opt-group-1:checked ~ opt-content:not(:nth-of-type(1)),
+input#opt-group-2:checked ~ opt-content:not(:nth-of-type(2)),
+input#opt-group-3:checked ~ opt-content:not(:nth-of-type(3)),
+input#opt-group-4:checked ~ opt-content:not(:nth-of-type(4)),
+input#opt-group-5:checked ~ opt-content:not(:nth-of-type(5)) {display: none;}
+
+/*  */
+.kofi-link-btn img {
+    border: 0px;
+    height: 30px;
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
+}

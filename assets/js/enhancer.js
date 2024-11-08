@@ -40,7 +40,7 @@ function getOptions(reset = false) {
 }
 
 // Listen any option changes
-chrome.storage.onChanged.addListener(function(changes) {
+chrome.storage.onChanged.addListener(function() {
 	getOptions(true);
 });
 
@@ -48,18 +48,21 @@ chrome.storage.onChanged.addListener(function(changes) {
 function setOptions(reset = false) {
 
 	for (const [opt, value] of Object.entries(opts)) {
+		//
 		if(opt == 'expandDetailsCheck') {
 			intervalEditions = setInterval(setExpanded, 500, value);
-		} else if(opt == 'titleCoverGrid') {
-			if(uri[1] === 'review' && uri[2] === 'list') {
-				setCoverTitle(reset, value);
-			}
-		}  else if(opt == 'hideAnnouncements') {
+		} else if(opt == 'titleCoverGrid' && uri[1] === 'review' && uri[2] === 'list') {
+			setCoverTitle(reset, value);
+		}  else if(opt == 'bookPageFullSize' && uri[1] === 'review' && uri[2] === 'list') {
+			bookPageFullSize(value);
+		} else if(opt == 'hideAnnouncements') {
 			hideAnnoucements(value);
-		} else if(opt.indexOf('hideHome' > -1) ) {
-			if(uri[1] === '') {
-				hideHomeElements(opt, value);
-			}
+		} else if(opt.indexOf('hideHome') > -1 && uri[1] === '') {
+			hideHomeElements(opt, value);
+		} else if(opt.indexOf('rightHome') > -1 && uri[1] === '') {
+			announcementOnRight(value);
+		}  else if(opt.indexOf('theme') > -1) {
+			setTheme(opt, value);
 		}
 	}
 
@@ -76,10 +79,9 @@ function setExpanded(expand) {
 	}
 
 	let editionLinks = document.querySelectorAll('a.Button');
-	let tooltipID, matches;
 
 	// Loop each tooltips to find
-	editionLinks.forEach(function(link, index) {
+	editionLinks.forEach(function(link) {
 		if(link.href.indexOf('editions')) {
 			if(expand) {
 				if(link.href.indexOf('?expanded=true&per_page=100') == -1) {
@@ -98,10 +100,6 @@ function setCoverTitle(reset, displayTitles) {
 		document.querySelectorAll('.div-title-ext').remove();
 	} else {
 
-		if(document.getElementById('books').className.indexOf('covers') > -1) {
-			document.querySelector('.mainContent').classList.add('gr-ext-mybooks');
-		}
-
 		if(document.getElementById('books') != null && document.getElementById('books') != 'null') {
 		
 			if(document.getElementById('books').classList.value.indexOf('covers') > -1) {
@@ -117,7 +115,7 @@ function setCoverTitle(reset, displayTitles) {
 					}
 				}
 	
-				bookslist.forEach(function(book, index) {
+				bookslist.forEach(function(book) {
 					//
 					bookName = book.querySelector('.title > .value > a').innerText;
 					//
@@ -127,7 +125,8 @@ function setCoverTitle(reset, displayTitles) {
 					//
 					book.querySelector('.field.cover').append(bookNameDiv);
 					// Bigger cover
-					book.querySelector('img').src = book.querySelector('img').src.replace('SY160', 'SY200').replace('SX98', 'SY200');
+					book.querySelector('.field.cover').querySelector('img').src = book.querySelector('.field.cover').querySelector('img').src.replace('SY160', 'SY200').replace('SX98', 'SY200');
+					
 				});
 			}
 		}
@@ -138,13 +137,19 @@ function hideAnnoucements(hide) {
 	
 	styleDisplay = hide == true ? 'none' : 'inherit';
 	
-	if(document.querySelector('.siteHeader__topFullImageContainer') != null && document.querySelector('.siteHeader__topFullImageContainer') != 'null') {
+	if(itExists(document.querySelector('.siteHeader__topFullImageContainer'))) {
 		document.querySelector('.siteHeader__topFullImageContainer').style.display = styleDisplay;
 	}
 
 	let siteHeaderEl = document.querySelector('.SiteHeaderBanner');
 	if(itExists(siteHeaderEl)) {
-			document.querySelector('.SiteHeaderBanner').style.display = styleDisplay;
+		document.querySelector('.SiteHeaderBanner').style.display = styleDisplay;
+
+		if(hide) {
+			document.querySelector('.PageFrame--siteHeaderBanner').style.paddingTop = '6.6rem';
+		} else {
+			document.querySelector('.PageFrame--siteHeaderBanner').style.paddingTop = '10.6rem';
+		}
 	}
 }
 
@@ -183,28 +188,95 @@ function hideHomeElements(el, hide) {
 	}
 }
 
+function bookPageFullSize(enabled) {
+	if(enabled) {
+		if(document.getElementById('books').className.indexOf('covers') > -1) {
+			document.querySelector('.mainContent').classList.add('gr-ext-mybooks');
+		}
+	} else {
+		document.querySelector('.mainContent').classList.remove('gr-ext-mybooks');
+	}
+}
+
 function bookDetailsEnhancement() {
+	console.log(opts)
 	// Display entire summary
 	let showMoreEl = Array.from(document.querySelectorAll('.BookPageMetadataSection .Button__labelItem')).find(el => el.textContent === 'Show more'); 
-	if(itExists(showMoreEl)) { showMoreEl.closest('button').click(); }
+	if(itExists(showMoreEl) && opts.ShowEntireSummary) { showMoreEl.closest('button').click(); }
 	// Display all genres
 	let AllGenresEl = Array.from(document.querySelectorAll('.Button__labelItem')).find(el => el.textContent === '...more');
-	if(itExists(AllGenresEl)) { AllGenresEl.closest('button').click(); }
+	if(itExists(AllGenresEl) && opts.ShowAllGenres) { AllGenresEl.closest('button').click(); }
 	// Inject new class to manipulate the DOM style of book page
 	document.querySelector('.PageFrame.PageFrame--siteHeaderBanner').classList.add('gr-ext-bookpage');
 	// 
-	let secondRightDiv = document.createElement('div');
-	secondRightDiv.classList.add('secondRightDiv');
-	document.querySelector('.BookPage__rightColumn').after(secondRightDiv);
-	document.querySelector('.secondRightDiv').append(document.querySelector('.AuthorPreview').closest('.PageSection'));
-	document.querySelector('.secondRightDiv').append(document.querySelector('.BookPage__relatedBottomContent'));
-	document.querySelector('.secondRightDiv').append(document.querySelector('.BookPage__relatedTopContent'));
-	
+	if(opts.moreInfoOnRight) {
+		let secondRightDiv = document.createElement('div');
+		secondRightDiv.classList.add('secondRightDiv');
+		document.querySelector('.BookPage__rightColumn').after(secondRightDiv);
+		document.querySelector('.secondRightDiv').append(document.querySelector('.AuthorPreview').closest('.PageSection'));
+		document.querySelector('.secondRightDiv').append(document.querySelector('.BookPage__relatedBottomContent'));
+		document.querySelector('.secondRightDiv').append(document.querySelector('.BookPage__relatedTopContent'));
+	}
 	// Trigger scroll 1px to trigger lazyload to load content after moving elements
 	setTimeout(() => {
 		window.scrollTo(0, 1);	
 		window.scrollTo(0, 0);	
 	}, 500);
+}
+
+function announcementOnRight(enabled) {
+	let annoucnementContainer = document.querySelector('.siteHeader__topFullImageContainer');
+
+	if(itExists(annoucnementContainer)){
+		if(enabled) {
+			annoucnementContainer.classList.add('gr-ext-annoucement-right');
+			document.querySelector('main').append(annoucnementContainer);
+		} else {
+			annoucnementContainer.classList.remove('gr-ext-annoucement-right');
+			document.querySelector('.siteHeader__topLine').before(annoucnementContainer);
+		}
+	}
+}
+
+function setTheme(el, colorValue) {
+
+	let cssStyle = '';
+
+	if(el === 'themeBgColor') {
+		cssStyle += `.gr-homePageBody, body, .mainContentFloat, .mainContent, .Alert--informational, .TruncatedContent__gradientOverlay
+		 	, .Spotlight, .HeaderNavDropdown--browse > ul { 
+			background-color: ${colorValue} !important;
+			background: ${colorValue} !important;
+		}`;
+	} else if(el === 'themeNavbarColor') {
+		cssStyle += `.siteHeader__topLine, .Header__siteHeaderBanner { background-color: ${colorValue} !important; }`;
+	}  else if(el === 'themeTextColor') {
+		cssStyle += `* { color: ${colorValue} !important; }
+			.Carousel__paginationButton .Icon svg { fill: #000; }
+		`;
+	} else if(el === 'themeNavbarElHoverColor') {
+		cssStyle += `.HeaderPrimaryNav__list > li > a:hover, .HeaderPrimaryNav__list > li > a:focus, .HeaderPrimaryNav__list > li:hover > a
+			, .HeaderPrimaryNav__list > li:focus-within > a, .siteHeader__topLevelLink:hover, .primaryNavMenu__trigger:hover, .primaryNavMenu__menu
+			, .primaryNavMenu__trigger--active, html.no-touchevents .dropdown__trigger--personalNav:hover, .headerPersonalNav:hover { 
+			background-color: ${colorValue} !important; 
+		}`;
+	} else if(el === 'themeHomeFeedColor') {
+		cssStyle += `.gr-newsfeedItem, .gr-newsfeedItem__details { background-color: ${colorValue} !important; }
+			.gr-commentForm.gr-mediaBox, .gr-newsfeedItem, .likeInformation { border-color: ${colorValue} !important; }
+			
+		`;
+	} else if(el === 'themeHomeLoadMoreColor') {
+		cssStyle += `.gr-newsfeed__loadMore button { 
+			background-color: ${colorValue} !important; 
+			border-color: ${colorValue} !important; 
+		}`;
+	} else if(el === 'themeInvertLogo') {
+		cssStyle += `.siteHeader__logo, .GoodreadsWordmark { filter: invert(1); }`;
+	}
+	
+	let style = document.createElement('style');
+	style.appendChild(document.createTextNode(cssStyle));
+	document.getElementsByTagName('head')[0].appendChild(style);
 }
 	
 

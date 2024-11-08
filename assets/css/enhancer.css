@@ -39,7 +39,6 @@
 .gr-ext-bookpage {
     width: 99% !important;
     max-width: initial !important;
-    padding-top: 6.6rem !important;
 }
 
 .gr-ext-bookpage .BookCover__image {
@@ -66,6 +65,8 @@
     }
 }
 
+.div-title-ext { padding-top: 5px; }
+
 .PageFrame__main.BookPage .BookDiscussions {
     width: 60% !important;
     margin: auto !important;
@@ -74,13 +75,29 @@
 /* HOME PAGE */
 
 .gr-homePageBody main { width: 100% !important; }
-.homeSecondaryColumn, .homeTertiaryColumn { width: 25% !important; }
+
+.homeSecondaryColumn, .homeTertiaryColumn { 
+    width: 20% !important; 
+    margin-left: 5%;
+}
+
 .homePrimaryColumn { width: 45% !important; }
+.homeTertiaryColumn { float: left !important; }
+
+.gr-ext-annoucement-right {
+    transform: rotate(90deg) !important;
+    top: 72% !important;
+    left: 49% !important;
+    float: right !important;
+    width: 100% !important;
+    position: fixed !important;
+    text-align: left !important;
+}
 
 /* GENERAL */
 
 .Header__siteHeaderBanner { 
-    height: 5rem !important;
+    height: auto !important;
     min-height: 50px !important;
 }
 

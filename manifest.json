@@ -1,8 +1,8 @@
 {
     "manifest_version": 3,
-    "name": "Goodreads Enhancer",
+    "name": "Goodreads Enhancement",
     "description": "Some Goodreads enhancement", 
-    "version": "0.1.4",
+    "version": "0.2",
     "permissions": [ 
         "storage"
     ],

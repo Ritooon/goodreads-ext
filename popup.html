@@ -1,71 +1,139 @@
 <link rel="stylesheet" type="text/css" href="assets/css/config.css" />
 <meta charset="UTF-8">
 
-<h1>Options</h1>
+<h1>Goodreads Enhancement</h1>
 
 <div id="ext-container">
-    <div class="config-blog">
-        <div>
-            <input type="checkbox" class="checkbox opt-checkbox" name="expandDetailsCheck" id="expandDetailsCheck" />
-            <b>Editions :</b> always expand details
-        </div>
-        <div>
-            <input type="checkbox" class="checkbox opt-checkbox" name="titleCoverGrid" id="titleCoverGrid" />
-            <b>Collection grid :</b> display title under cover
-        </div>
-        
-    </div>
+    <opt-container>
 
-    <div class="config-blog">
-        <h2>Hide elements</h2>
-        <h4>General</h4>
-        <div>
-            <input type="checkbox" class="checkbox opt-checkbox" name="hideAnnouncements" id="hideAnnouncements" />
-            Goodreads top bar annoucements
-        </div>
-        <h4>Home</h4>
-        <div>
-            <input type="checkbox" class="checkbox opt-checkbox" name="hideHomeSitesAnnouncements" id="hideHomeSitesAnnouncements" />
-            Site announcements (Top of home feed)
-        </div>
-        <div>
-            <input type="checkbox" class="checkbox opt-checkbox" name="hideHomeCurrentlyReading" id="hideHomeCurrentlyReading" />
-            Currently reading
-        </div>
-        <div>
-            <input type="checkbox" class="checkbox opt-checkbox" name="hideHomeReadingChallenge" id="hideHomeReadingChallenge" />
-            Reading challenge
-        </div>
-        <div>
-            <input type="checkbox" class="checkbox opt-checkbox" name="hideHomeWantToRead" id="hideHomeWantToRead" />
-            Want to read
-        </div>
-        <div>
-            <input type="checkbox" class="checkbox opt-checkbox" name="hideHomeBookshelves" id="hideHomeBookshelves" />
-            Bookshelves
-        </div>
-        <div>
-            <input type="checkbox" class="checkbox opt-checkbox" name="hideHomeNewsInterviews" id="hideHomeNewsInterviews" />
-            News & interviews
-        </div>
-        <div>
-            <input type="checkbox" class="checkbox opt-checkbox" name="hideHomeRecommendation" id="hideHomeRecommendation" />
-            Recommendations
-        </div>
-        <div>
-            <input type="checkbox" class="checkbox opt-checkbox" name="hideHomeImproveRecommendation" id="hideHomeImproveRecommendation" />
-            Improve recommendations
-        </div>
-        <div>
-            <input type="checkbox" class="checkbox opt-checkbox" name="hideHomeChoiceAwards" id="hideHomeChoiceAwards" />
-            Goodreads choice awards
-        </div>
-        <div>
-            <input type="checkbox" class="checkbox opt-checkbox" name="hideHomeCompanyInfo" id="hideHomeCompanyInfo" />
-            Goodreads company information
-        </div>
-    </div>
-    
+        <input type="radio" class="opt-radio-menu" id="opt-group-1" name="tabs" value="1"  />
+        <label for="opt-group-1" class="opt-radio-menu-label" checked="checked">General</label>
+        <input type="radio" class="opt-radio-menu" id="opt-group-2" name="tabs" value="2" />
+        <label for="opt-group-2" class="opt-radio-menu-label">Home</label>
+        <input type="radio" class="opt-radio-menu" id="opt-group-3" name="tabs" value="3" />
+        <label for="opt-group-3" class="opt-radio-menu-label">My books</label>
+        <input type="radio" class="opt-radio-menu" id="opt-group-4" name="tabs" value="4" />
+        <label for="opt-group-4" class="opt-radio-menu-label">Book page</label>
+        <input type="radio" class="opt-radio-menu" id="opt-group-5" name="tabs" value="5" checked/>
+        <label for="opt-group-5" class="opt-radio-menu-label">Theme</label>
 
+        <opt-content>
+            <div>
+                <input type="checkbox" class="checkbox opt-checkbox" name="hideAnnouncements" id="hideAnnouncements" />
+                Hide Goodreads top bar annoucements
+            </div>
+            <div>
+                <input type="checkbox" class="checkbox opt-checkbox" name="expandDetailsCheck" id="expandDetailsCheck" />
+                <b>Editions :</b> always expand details
+            </div>
+        </opt-content>
+        <opt-content>
+            <div>
+                <input type="checkbox" class="checkbox opt-checkbox" name="rightHomeAnnouncements" id="rightHomeAnnouncements" />
+                Goodreads top bar annoucements on the right (Only on home page - If not hidden)
+            </div>
+            <div>
+                <input type="checkbox" class="checkbox opt-checkbox" name="hideHomeSitesAnnouncements" id="hideHomeSitesAnnouncements" />
+                Site announcements (Top of home feed)
+            </div>
+            <div>
+                <input type="checkbox" class="checkbox opt-checkbox" name="hideHomeCurrentlyReading" id="hideHomeCurrentlyReading" />
+                Currently reading
+            </div>
+            <div>
+                <input type="checkbox" class="checkbox opt-checkbox" name="hideHomeReadingChallenge" id="hideHomeReadingChallenge" />
+                Reading challenge
+            </div>
+            <div>
+                <input type="checkbox" class="checkbox opt-checkbox" name="hideHomeWantToRead" id="hideHomeWantToRead" />
+                Want to read
+            </div>
+            <div>
+                <input type="checkbox" class="checkbox opt-checkbox" name="hideHomeBookshelves" id="hideHomeBookshelves" />
+                Bookshelves
+            </div>
+            <div>
+                <input type="checkbox" class="checkbox opt-checkbox" name="hideHomeNewsInterviews" id="hideHomeNewsInterviews" />
+                News & interviews
+            </div>
+            <div>
+                <input type="checkbox" class="checkbox opt-checkbox" name="hideHomeRecommendation" id="hideHomeRecommendation" />
+                Recommendations
+            </div>
+            <div>
+                <input type="checkbox" class="checkbox opt-checkbox" name="hideHomeImproveRecommendation" id="hideHomeImproveRecommendation" />
+                Improve recommendations
+            </div>
+            <div>
+                <input type="checkbox" class="checkbox opt-checkbox" name="hideHomeChoiceAwards" id="hideHomeChoiceAwards" />
+                Goodreads choice awards
+            </div>
+            <div>
+                <input type="checkbox" class="checkbox opt-checkbox" name="hideHomeCompanyInfo" id="hideHomeCompanyInfo" />
+                Goodreads company information
+            </div>
+        </opt-content>
+        <opt-content>
+            <div>
+                <input type="checkbox" class="checkbox opt-checkbox" name="titleCoverGrid" id="titleCoverGrid" />
+                <b>Cover view :</b> display title under cover
+            </div>
+            <div>
+                <input type="checkbox" class="checkbox opt-checkbox" name="bookPageFullSize" id="bookPageFullSize" />
+                <b>Cover view :</b> Full size
+            </div>
+        </opt-content>
+        <opt-content>
+            <div>
+                <input type="checkbox" class="checkbox opt-checkbox" name="ShowEntireSummary" id="ShowEntireSummary" />
+                Show entire summary
+            </div>
+            <div>
+                <input type="checkbox" class="checkbox opt-checkbox" name="ShowAllGenres" id="ShowAllGenres" />
+                Show all genres
+            </div>
+
+            <div>
+                <input type="checkbox" class="checkbox opt-checkbox" name="moreInfoOnRight" id="moreInfoOnRight" />
+                More info on the right
+            </div>
+        </opt-content>
+        <opt-content>
+            <div>
+                <input type="color" class="colorpicker" name="themeBgColor" id="themeBgColor" />
+                Background color
+            </div>
+
+            <div>
+                <input type="color" class="colorpicker" name="themeTextColor" id="themeTextColor" />
+                Text color
+            </div>
+
+            <div>
+                <input type="color" class="colorpicker" name="themeNavbarColor" id="themeNavbarColor" />
+                Navbar background color
+            </div>
+
+            <div>
+                <input type="color" class="colorpicker" name="themeNavbarElHoverColor" id="themeNavbarElHoverColor" />
+                Navbar element hover background color
+            </div>
+            <div>
+                <input type="color" class="colorpicker" name="themeHomeFeedColor" id="themeHomeFeedColor" />
+                Home feed cards background
+            </div>
+            <div>
+                <input type="color" class="colorpicker" name="themeHomeLoadMoreColor" id="themeHomeLoadMoreColor" />
+                Load More (feed)
+            </div>
+            <div>
+                <input type="checkbox" class="checkbox opt-checkbox" name="themeInvertLogo" id="themeInvertLogo" />
+                Invert logo
+            </div>
+        </opt-content>
+    </opt-container>
 </div>
+
+<a href='https://ko-fi.com/K3K615TBVR' class="kofi-link-btn" target='_blank'><img src='https://storage.ko-fi.com/cdn/kofi6.png?v=6' border='0' alt='Buy Me a Coffee at ko-fi.com' /></a>
+
 <script src="assets/js/config.js"></script>
