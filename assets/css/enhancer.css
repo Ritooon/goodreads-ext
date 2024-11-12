@@ -86,12 +86,13 @@
 
 .gr-ext-annoucement-right {
     transform: rotate(90deg) !important;
-    top: 72% !important;
-    left: 49% !important;
+    top: 0% !important;
+    left: 75.7% !important;
     float: right !important;
-    width: 100% !important;
+    width: 100vh !important;
     position: fixed !important;
-    text-align: left !important;
+    text-align: center !important;
+    height: 40px !important;
 }
 
 /* GENERAL */

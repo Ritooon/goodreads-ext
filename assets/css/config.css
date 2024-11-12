@@ -6,6 +6,8 @@
     min-height: 350px;
 }
 
+.mt-2 { margin-top: 2em; }
+
 html {
     background-color: #1A3636;
     color: #a4b2a6;

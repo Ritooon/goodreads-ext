@@ -32,9 +32,7 @@ function getOptions(reset = false) {
 				}
 			}
 
-			// setTimeout(() => {
-				setOptions(reset);
-			// }, 200);
+			setOptions(reset);
 		}
 	});
 }
@@ -56,7 +54,7 @@ function setOptions(reset = false) {
 		}  else if(opt == 'bookPageFullSize' && uri[1] === 'review' && uri[2] === 'list') {
 			bookPageFullSize(value);
 		} else if(opt == 'hideAnnouncements') {
-			hideAnnoucements(value);
+			hideAnnoucements(value, opts.rightHomeAnnouncements, uri[1]);
 		} else if(opt.indexOf('hideHome') > -1 && uri[1] === '') {
 			hideHomeElements(opt, value);
 		} else if(opt.indexOf('rightHome') > -1 && uri[1] === '') {
@@ -133,9 +131,13 @@ function setCoverTitle(reset, displayTitles) {
 	}	
 }
 
-function hideAnnoucements(hide) {
+function hideAnnoucements(hide, homeAnnouncementDisplay, actualPage) {
 	
-	styleDisplay = hide == true ? 'none' : 'inherit';
+	let styleDisplay = 'inherit';
+	
+	if(hide && (!homeAnnouncementDisplay || actualPage != '')) {
+		styleDisplay = 'none';
+	}	
 	
 	if(itExists(document.querySelector('.siteHeader__topFullImageContainer'))) {
 		document.querySelector('.siteHeader__topFullImageContainer').style.display = styleDisplay;
@@ -149,6 +151,20 @@ function hideAnnoucements(hide) {
 			document.querySelector('.PageFrame--siteHeaderBanner').style.paddingTop = '6.6rem';
 		} else {
 			document.querySelector('.PageFrame--siteHeaderBanner').style.paddingTop = '10.6rem';
+		}
+	}
+}
+
+function announcementOnRight(enabled) {
+	let annoucnementContainer = document.querySelector('.siteHeader__topFullImageContainer');
+
+	if(itExists(annoucnementContainer)){
+		if(enabled) {
+			annoucnementContainer.classList.add('gr-ext-annoucement-right');
+			document.querySelector('main').append(annoucnementContainer);
+		} else {
+			annoucnementContainer.classList.remove('gr-ext-annoucement-right');
+			document.querySelector('.siteHeader__topLine').before(annoucnementContainer);
 		}
 	}
 }
@@ -199,7 +215,6 @@ function bookPageFullSize(enabled) {
 }
 
 function bookDetailsEnhancement() {
-	console.log(opts)
 	// Display entire summary
 	let showMoreEl = Array.from(document.querySelectorAll('.BookPageMetadataSection .Button__labelItem')).find(el => el.textContent === 'Show more'); 
 	if(itExists(showMoreEl) && opts.ShowEntireSummary) { showMoreEl.closest('button').click(); }
@@ -220,22 +235,7 @@ function bookDetailsEnhancement() {
 	// Trigger scroll 1px to trigger lazyload to load content after moving elements
 	setTimeout(() => {
 		window.scrollTo(0, 1);	
-		window.scrollTo(0, 0);	
 	}, 500);
-}
-
-function announcementOnRight(enabled) {
-	let annoucnementContainer = document.querySelector('.siteHeader__topFullImageContainer');
-
-	if(itExists(annoucnementContainer)){
-		if(enabled) {
-			annoucnementContainer.classList.add('gr-ext-annoucement-right');
-			document.querySelector('main').append(annoucnementContainer);
-		} else {
-			annoucnementContainer.classList.remove('gr-ext-annoucement-right');
-			document.querySelector('.siteHeader__topLine').before(annoucnementContainer);
-		}
-	}
 }
 
 function setTheme(el, colorValue) {

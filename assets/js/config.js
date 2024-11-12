@@ -43,3 +43,15 @@ function saveOpts(nameOpt, value) {
 	opts[nameOpt] = value;	
 	chrome.storage.sync.set({'opts': opts});
 }
+
+// Reset theme button
+// document.getElementById('resetTheme').addEventListener("click", function() {
+// 	for (const [opt, value] of Object.entries(opts)) {
+// 		//
+// 		if(opt.indexOf('theme') > -1) {
+// 			delete opts[opt];
+// 		}
+// 	}
+
+// 	chrome.storage.sync.set({'opts': opts});
+// });

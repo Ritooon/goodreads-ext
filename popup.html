@@ -6,7 +6,7 @@
 <div id="ext-container">
     <opt-container>
 
-        <input type="radio" class="opt-radio-menu" id="opt-group-1" name="tabs" value="1"  />
+        <input type="radio" class="opt-radio-menu" id="opt-group-1" name="tabs" value="1" checked />
         <label for="opt-group-1" class="opt-radio-menu-label" checked="checked">General</label>
         <input type="radio" class="opt-radio-menu" id="opt-group-2" name="tabs" value="2" />
         <label for="opt-group-2" class="opt-radio-menu-label">Home</label>
@@ -14,7 +14,7 @@
         <label for="opt-group-3" class="opt-radio-menu-label">My books</label>
         <input type="radio" class="opt-radio-menu" id="opt-group-4" name="tabs" value="4" />
         <label for="opt-group-4" class="opt-radio-menu-label">Book page</label>
-        <input type="radio" class="opt-radio-menu" id="opt-group-5" name="tabs" value="5" checked/>
+        <input type="radio" class="opt-radio-menu" id="opt-group-5" name="tabs" value="5" />
         <label for="opt-group-5" class="opt-radio-menu-label">Theme</label>
 
         <opt-content>
@@ -30,7 +30,7 @@
         <opt-content>
             <div>
                 <input type="checkbox" class="checkbox opt-checkbox" name="rightHomeAnnouncements" id="rightHomeAnnouncements" />
-                Goodreads top bar annoucements on the right (Only on home page - If not hidden)
+                Goodreads top bar annoucements on the right (Only on home page)
             </div>
             <div>
                 <input type="checkbox" class="checkbox opt-checkbox" name="hideHomeSitesAnnouncements" id="hideHomeSitesAnnouncements" />
@@ -99,7 +99,8 @@
             </div>
         </opt-content>
         <opt-content>
-            <div>
+            Coming soon
+            <!-- <div>
                 <input type="color" class="colorpicker" name="themeBgColor" id="themeBgColor" />
                 Background color
             </div>
@@ -130,6 +131,10 @@
                 <input type="checkbox" class="checkbox opt-checkbox" name="themeInvertLogo" id="themeInvertLogo" />
                 Invert logo
             </div>
+            <div class="mt-2">
+                <button type="butoton" class="btn bg-red" name="resetTheme" id="resetTheme" />
+                Reset theme
+            </div> -->
         </opt-content>
     </opt-container>
 </div>
