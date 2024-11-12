@@ -2,7 +2,7 @@
     "manifest_version": 3,
     "name": "Goodreads Enhancement",
     "description": "Some Goodreads enhancement", 
-    "version": "0.2",
+    "version": "1.0.0",
     "permissions": [ 
         "storage"
     ],

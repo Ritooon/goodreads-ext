@@ -85,16 +85,20 @@
 .homeTertiaryColumn { float: left !important; }
 
 .gr-ext-annoucement-right {
+    transform-origin: top right;
     transform: rotate(90deg) !important;
-    top: 0% !important;
-    left: 75.7% !important;
-    float: right !important;
+    top: 50vh !important;
+    right: 0;
     width: 100vh !important;
     position: fixed !important;
-    text-align: center !important;
     height: 40px !important;
+    z-index: 100;
 }
 
+
+.choiceWidget__photoAndTextContainer img, .siteAnnouncement img, .gr-mediaFlexbox__media.siteAnnouncement__masthead { width: 100% !important; }
+
+.choiceWidget .gr-mediaFlexbox__media { margin-right: 0px !important; }
 /* GENERAL */
 
 .Header__siteHeaderBanner { 
