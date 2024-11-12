@@ -72,15 +72,18 @@ function setOptions(reset = false) {
 
 function setExpanded(expand) {
 
-	if(intervalEditions != null) {
-		clearInterval(intervalEditions);
-	}
+	
 
 	let editionLinks = document.querySelectorAll('a.Button');
 
 	// Loop each tooltips to find
 	editionLinks.forEach(function(link) {
 		if(link.href.indexOf('editions')) {
+			
+			if(intervalEditions != null) {
+				clearInterval(intervalEditions);
+			}
+
 			if(expand) {
 				if(link.href.indexOf('?expanded=true&per_page=100') == -1) {
 					link.href += '?expanded=true&per_page=100';
@@ -219,7 +222,7 @@ function bookDetailsEnhancement() {
 	let showMoreEl = Array.from(document.querySelectorAll('.BookPageMetadataSection .Button__labelItem')).find(el => el.textContent === 'Show more'); 
 	if(itExists(showMoreEl) && opts.ShowEntireSummary) { showMoreEl.closest('button').click(); }
 	// Display all genres
-	let AllGenresEl = Array.from(document.querySelectorAll('.Button__labelItem')).find(el => el.textContent === '...more');
+	let AllGenresEl = Array.from(document.querySelectorAll('.BookPageMetadataSection__genres .Button__labelItem')).find(el => el.textContent === '...more');
 	if(itExists(AllGenresEl) && opts.ShowAllGenres) { AllGenresEl.closest('button').click(); }
 	// Inject new class to manipulate the DOM style of book page
 	document.querySelector('.PageFrame.PageFrame--siteHeaderBanner').classList.add('gr-ext-bookpage');
