@@ -6,6 +6,9 @@ All changes are client-side.
 
 ### Roadmap
 For now, the roadmap is rather... short. It will grow over time with my usage, feedback from friends who use Goodreads, or requests from you.
+ - [ ] Clean the mess in my code (re-organize, optimize, comment and test after modifications)
+ - [ ] Option to move editions rating on the left (And replace standard notation)
+ - [ ] Stabilization
  - [ ] Theming
  - [ ] ...
 
