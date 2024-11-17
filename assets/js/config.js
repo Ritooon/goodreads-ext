@@ -1,10 +1,12 @@
 let opts = {};
 var waitForEndTyping;
 var saveIndicator = document.getElementById('saveIndicator');
+var firstInstallation;
 
 // Get the options stored
 chrome.storage.sync.get('opts', function(data) {
-	if (data) {
+	console.log(data.opts)
+	if (data.opts) {
 		for (const property in data) {
 			if(property == 'opts') {
 				for (const [key, value] of Object.entries(data[property])) {
@@ -17,10 +19,18 @@ chrome.storage.sync.get('opts', function(data) {
 				}
 			}
 		}
+	} else {
+		// // First initialisation 
+		// let checkboxes1stInit = document.querySelectorAll('#hideAnnouncements, #expandDetailsCheck, #moveAnnouncementHome, #titleCoverGrid, #bookPageFullSize, #ShowEntireSummary, #ShowAllGenres, #moreInfoOnRight');
+	
+		// for (let i = 0; i < checkboxes1stInit.length; i++) {
+		// 	checkboxes1stInit[i].checked = true;
+		// }
 	}
 });
 
-// Bind the checkbox action
+
+// Bind the checkbox action : Save on click
 const optsCheckboxes = document.querySelectorAll(".opt-checkbox");
 
 for (let i = 0; i < optsCheckboxes.length; i++) {
@@ -29,7 +39,7 @@ for (let i = 0; i < optsCheckboxes.length; i++) {
 	});
 }
 
- // Bind the checkbox action
+ // Bind the checkbox action : Save on change
 const themeColorPicker = document.querySelectorAll(".colorpicker");
 
 for (let i = 0; i < themeColorPicker.length; i++) {
@@ -38,7 +48,7 @@ for (let i = 0; i < themeColorPicker.length; i++) {
    });
 }
 
- // 
+ // Save option function
 function saveOpts(nameOpt, value) {
 	opts[nameOpt] = value;	
 	chrome.storage.sync.set({'opts': opts});
