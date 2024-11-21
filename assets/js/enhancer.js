@@ -1,6 +1,6 @@
 var opts = {};
 const uri = window.location.pathname.split('/');
-var intervalEditions, intervalNotation, localStorageCSS = '';
+var intervalEditions, intervalNotation, localStorageCSS = '', nbBooks = 0;
 
 // Console log to announce extension is working
 console.log('Goodreads enhancement - Loading preferences');
@@ -22,6 +22,7 @@ let cssStyle = '';
 cssStyle += ' '+String(localStorage.getItem('hideAnnouncementCSS'));
 cssStyle += ' '+String(localStorage.getItem('moveTopAnnouncementCSS'));
 cssStyle += ' '+String(localStorage.getItem('homeElementsCSS'));
+cssStyle += ' '+String(localStorage.getItem('entireSummaryCSS'));
 style.appendChild(document.createTextNode(cssStyle));
 style.id = 'firstLoadCSS';
 document.getElementsByTagName('html')[0].appendChild(style);
@@ -79,7 +80,6 @@ chrome.storage.onChanged.addListener(function() {
 function setOptions(reset = false) {
 
 	for (const [opt, value] of Object.entries(opts)) {
-		console.log(opt)
 		// Option : Expand details on "Show editions" links
 		if(opt == 'expandDetailsCheck') {
 			// Interval is set, because some pages make a lot of times to add objects to DOM
@@ -88,6 +88,7 @@ function setOptions(reset = false) {
 		// Option : Display title under the covers on Cover display in "My books" page 
 		else if(opt == 'titleCoverGrid' && uri[1] === 'review' && uri[2] === 'list') {
 			setCoverTitle(reset, value);
+			document.addEventListener('scroll', scrollBooks);
 		}
 		// Option : Make "My books" page content full size
 		else if(opt == 'bookPageFullSize' && uri[1] === 'review' && uri[2] === 'list') {
@@ -118,7 +119,7 @@ function setOptions(reset = false) {
 
 	// If on a book page, load enhancements 
 	if(uri[1] === 'book') {
-		bookDetailsEnhancement(opts.ShowEntireSummary, opts.ShowAllGenres, opts.moreInfoOnRight);
+		bookDetailsEnhancement(opts.ShowEntireSummary, opts.ShowAllGenres, opts.moreInfoOnRight, opts.friendsNotationOnTop);
 	}
 }
 
@@ -252,28 +253,29 @@ function hideAnnoucements(hide, homeAnnouncementDisplay, actualPage) {
 	
 	let styleDisplay = 'flex';
 	localStorageCSS = '';
+	let paddingTop = '10.6rem';
 	
 	
 	if(hide && (!homeAnnouncementDisplay || actualPage != '')) {
 		styleDisplay = 'none';
+		paddingTop = '6.6rem';
 	}	
 	
 	if(itExists(document.querySelector('.siteHeader__topFullImageContainer'))) {
-		document.querySelector('.siteHeader__topFullImageContainer').style.display = styleDisplay;
-		localStorageCSS += `.siteHeader__topFullImageContainer { display: ${styleDisplay} !important; }`;
+		document.querySelector('.siteHeader__topFullImageContainer').setAttribute('style', 'display : '+styleDisplay+' !important');
 	}
+	localStorageCSS += `.siteHeader__topFullImageContainer { display: ${styleDisplay} !important; }`;
+	localStorageCSS += `.SiteHeaderBanner { display: ${styleDisplay} !important; }`;
+	localStorageCSS += `.PageFrame--siteHeaderBanner { padding-top: ${styleDisplay} !important; }`;
 
 	let siteHeaderEl = document.querySelector('.SiteHeaderBanner');
 	if(itExists(siteHeaderEl)) {
-		document.querySelector('.SiteHeaderBanner').style.display = styleDisplay;
-		localStorageCSS += `.SiteHeaderBanner { display: ${styleDisplay} !important; }`;
+		document.querySelector('.SiteHeaderBanner').setAttribute('style', 'display : '+styleDisplay);
 
 		if(hide) {
-			document.querySelector('.PageFrame--siteHeaderBanner').style.paddingTop = '6.6rem';
-			localStorageCSS += '.PageFrame--siteHeaderBanner { padding-top: 6.6rem !important; }';
+			document.querySelector('.PageFrame--siteHeaderBanner').style.paddingTop = paddingTop;
 		} else {
-			document.querySelector('.PageFrame--siteHeaderBanner').style.paddingTop = '10.6rem';
-			localStorageCSS += '.PageFrame--siteHeaderBanner { padding-top: 10.6rem !important; }';
+			document.querySelector('.PageFrame--siteHeaderBanner').style.paddingTop = paddingTop;
 		}
 	}
 
@@ -290,8 +292,8 @@ function hideAnnoucements(hide, homeAnnouncementDisplay, actualPage) {
 function setCoverTitle(reset, displayTitles) {
 
 	if(!displayTitles) {
-		document.querySelectorAll('.div-title-ext').remove();
-	} else {
+		document.querySelectorAll('.div-title-ext').forEach(e => e.remove());
+	} else {		
 
 		if(document.getElementById('books') != null && document.getElementById('books') != 'null') {
 		
@@ -322,6 +324,15 @@ function setCoverTitle(reset, displayTitles) {
 				});
 			}
 		}
+	}
+}
+
+function scrollBooks() {
+	if(opts.titleCoverGrid) {
+		if(nbBooks < document.querySelectorAll('.field.cover').length) {
+			setCoverTitle(true, opts.titleCoverGrid)
+			nbBooks = document.querySelectorAll('.field.cover').length;
+		}
 	}	
 }
 
@@ -343,10 +354,24 @@ function bookPageFullSize(enabled) {
 ////////////////////////////////////////////////////
 
 // Update the display in a book page to make it better
-function bookDetailsEnhancement(showEntireSummary, showAllGenres, showMoreInfoOnRight) {
+function bookDetailsEnhancement(showEntireSummary, showAllGenres, showMoreInfoOnRight, friendsNotationOnTop) {
 	// Display entire summary
-	let showMoreEl = Array.from(document.querySelectorAll('.BookPageMetadataSection .Button__labelItem')).find(el => el.textContent === 'Show more'); 
-	if(itExists(showMoreEl) && showEntireSummary) { showMoreEl.closest('button').click(); }
+	let cssStyle = '';
+	
+	if(showEntireSummary) {
+		cssStyle = '.BookPageMetadataSection__description .TruncatedContent__text { max-height: initial !important; overflow: initial !important; word-break: initial !important; }';
+		let style = document.createElement('style');
+		style.appendChild(document.createTextNode(cssStyle));
+		style.id = 'entireSummaryCSS';
+		document.getElementsByTagName('head')[0].appendChild(style);
+	} else {
+		if(itExists(document.getElementById('entireSummaryCSS'))) {
+			document.getElementById('entireSummaryCSS').remove();
+		}
+	}
+
+	localStorage.setItem('entireSummaryCSS', cssStyle);
+
 	// Display all genres
 	let AllGenresEl = Array.from(document.querySelectorAll('.BookPageMetadataSection__genres .Button__labelItem')).find(el => el.textContent === '...more');
 	if(itExists(AllGenresEl) && showAllGenres) { AllGenresEl.closest('button').click(); }
@@ -361,10 +386,20 @@ function bookDetailsEnhancement(showEntireSummary, showAllGenres, showMoreInfoOn
 		document.querySelector('.secondRightDiv').append(document.querySelector('.BookPage__relatedBottomContent'));
 		document.querySelector('.secondRightDiv').append(document.querySelector('.BookPage__relatedTopContent'));
 	}
+
 	// Trigger scroll 1px to trigger lazyload to load content after moving elements
 	setTimeout(() => {
 		window.scrollTo(0, 1);	
 	}, 500);
+
+	// Friends notations on top
+	if(friendsNotationOnTop) {
+		getEl('BookPageMetadataSection__ratingStats').after(document.getElementById('SocialReviews').parentElement);
+		document.getElementById('SocialReviews').style.display = 'none';
+	} else {
+		getEl('ReviewsSection__header').after(document.getElementById('SocialReviews').parentElement);
+		document.getElementById('SocialReviews').style.display = 'block';
+	}
 }
 
 function replaceBookNotation(active) {
@@ -388,13 +423,25 @@ function replaceBookNotation(active) {
 		if(active) {
 			// Inject CSS to update style when it's on the left
 			getEl('BookPage__leftColumn').classList.add(classNotationLeft);
-			// Move element
-			getEl('BookActions').before(getEl(elToMove));
+			
+			// Note for anyone reading this : I'm sorry about that. Goodreads does not make things easym I had to trick it. Will improve this in the future
+			let reviewSectionEls = document.getElementById('ReviewsSection').childNodes;
+
+			for (let index = 0; index < reviewSectionEls.length; index++) {
+				if(reviewSectionEls[index].className !== 'WriteReviewCTA' && reviewSectionEls[index].className !== 'Divider Divider--largeMargin'
+					&& reviewSectionEls[index].className !== 'lazyload-wrapper ' && reviewSectionEls[index].className !== 'MyReviewCardCarousel') {
+						getEl('BookPage__reviewsSection').append(reviewSectionEls[index]);
+						index--;
+					}
+			}
+
+			getEl('BookActions').after(document.getElementById('ReviewsSection'));		
+			
 		} else {
 			// Remove CSS to update style when it's not on the left
 			getEl('BookPage__leftColumn').classList.remove(classNotationLeft);
-			// Move element
-			getEl('ReviewsSection__header').after(getEl(elToMove));
+			//
+			getEl('ReviewsSection__header').after(document.getElementById('ReviewsSection'));
 		}
 	}
 }

@@ -75,54 +75,120 @@
 .gr-ext-book-edition-notation-left .MyReviewCard__profile, .gr-ext-book-edition-notation-left-no-carousel .MyReviewCard__profile, 
 .gr-ext-book-edition-notation-left .Avatar, .gr-ext-book-edition-notation-left-no-carousel .Avatar { display: none !important; }
 
-.gr-ext-book-edition-notation-left-no-carousel .MyReviewCard__content { grid-column: span 11 !important; }
+.gr-ext-book-edition-notation-left-no-carousel .MyReviewCard__content
+, .gr-ext-book-edition-notation-left .MyReviewCardCarousel:not(:has(.BookCard)) .MyReviewCard__content { grid-column: span 11 !important; }
 
-.gr-ext-book-edition-notation-left .WriteReviewCTA, .gr-ext-book-edition-notation-left-no-carousel .WriteReviewCTA { padding: 0 !important }
+.gr-ext-book-edition-notation-left .MyReviewCardCarousel:not(:has(.BookCard)) .MyReviewCard__tags { text-align: center !important; }
+
+
+.gr-ext-book-edition-notation-left .WriteReviewCTA, .gr-ext-book-edition-notation-left-no-carousel .WriteReviewCTA { 
+    padding: 0 !important;
+    margin-top: 1rem !important;
+}
 
 .BookPage__leftColumn .BookActions { margin: 0 !important; }
 
-.gr-ext-book-edition-notation-left .WriteReviewCTA__message, .gr-ext-book-edition-notation-left-no-carousel .WriteReviewCTA__message { font-size: 2rem !important; }
+.gr-ext-book-edition-notation-left .WriteReviewCTA__message, .gr-ext-book-edition-notation-left-no-carousel .WriteReviewCTA__message { font-size: 1.6rem !important; }
 
 .gr-ext-book-edition-notation-left .WriteReviewCTA__reviewCTA, 
 
-.gr-ext-book-edition-notation-left-no-carousel .WriteReviewCTA__reviewCTA { flex-direction: column !important; }
+.gr-ext-book-edition-notation-left-no-carousel .WriteReviewCTA__reviewCTA { 
+    flex-direction: column !important; 
+    gap: 1rem !important;
+}
+
+.gr-ext-book-edition-notation-left .MyReviewCard__row { 
+    flex-direction: column-reverse !important; 
+    align-items: center;
+}
 
 .gr-ext-book-edition-notation-left .MyReviewCard__bookCardContainer { grid-column: span 3 !important; }
 
 .gr-ext-book-edition-notation-left .MyReviewCard__content { grid-column: span 5 !important; }
 
-.gr-ext-book-edition-notation-left .Carousel__header { display: none !important; }
+.gr-ext-book-edition-notation-left .Carousel__header, .gr-ext-book-edition-notation-left .MyReviewCardCarousel__header { display: none !important; }
+
+.gr-ext-book-edition-notation-left .WriteReviewCTA__hero--overflow { justify-content: space-around !important; }
+.gr-ext-book-edition-notation-left .WriteReviewCTA.WriteReviewCTA--leftAligned { align-items: center !important; }
 
 .gr-ext-book-edition-notation-left .CarouselGroup { margin: 0 !important; }
 
-.gr-ext-book-edition-notation-left .Divider, .gr-ext-book-edition-notation-left .Carousel div:has(.CaretSmallIcon), 
-.gr-ext-book-edition-notation-left .MyReviewCard__tags  { display: none !important; }
+.gr-ext-book-edition-notation-left .Divider, .gr-ext-book-edition-notation-left .Carousel div:has(.CaretSmallIcon),
+.gr-ext-book-edition-notation-left-no-carousel .Divider { display: none !important; }
 
 
 .gr-ext-book-edition-notation-left .BookActions, .gr-ext-book-edition-notation-left-no-carousel .BookActions { 
     justify-content: space-evenly !important; 
     flex-direction: row !important;
+    align-items: center !important;
 }
 
 .gr-ext-book-edition-notation-left .BookActions .Button, .gr-ext-book-edition-notation-left-no-carousel .BookActions .Button { 
     font-size: 1.3rem !important;
-    border-radius: 0 !important;
+    /* border-radius: 0 !important; */
     padding: 0px 6px !important;
 }
 
-.gr-ext-book-edition-notation-left .BookActions .Button--secondary, .gr-ext-book-edition-notation-left-no-carousel .BookActions .Button--secondary { 
-    background-color: var(--color-border-button-secondary-base) !important;
-    color: white !important;
+.gr-ext-book-edition-notation-left .BookActions .BookActions__button, .gr-ext-book-edition-notation-left-no-carousel .BookActions .BookActions__button,
+.gr-ext-book-edition-notation-left .BookActions__alert, .gr-ext-book-edition-notation-left-no-carousel .BookActions__alert { 
+    margin: 0 !important;
+    flex-basis: 100%;
 }
 
-.gr-ext-book-edition-notation-left .BookActions .Button--buy, .gr-ext-book-edition-notation-left-no-carousel .BookActions .Button--buy { 
-    background-color: var(--color-border-buy) !important;
-    color: white !important;
+.gr-ext-book-edition-notation-left .MyReviewCard, .gr-ext-book-edition-notation-left-no-carousel .MyReviewCard {
+    display: flex !important;
 }
 
-.BookActions .BookRatingStars, .gr-ext-book-edition-notation-left .BookActions__editActivityButton,
+.gr-ext-book-edition-notation-left .Carousel__paginationButton--right .Button__container, 
+.gr-ext-book-edition-notation-left-no-carousel .Carousel__paginationButton--right .Button__container {
+    right: -1rem !important;
+}
+
+.gr-ext-book-edition-notation-left .Carousel__paginationButton .Button__container, 
+.gr-ext-book-edition-notation-left-no-carousel .Carousel__paginationButton .Button__container,
+.gr-ext-book-edition-notation-left .Carousel__paginationButton .Button__container,
+.gr-ext-book-edition-notation-left-no-carousel .Carousel__paginationButton .Button__container {
+    top: 60% !important;
+}
+
+.gr-ext-book-edition-notation-left .MyReviewCardCarousel {
+    margin-top: 1rem !important;
+}
+
+.gr-ext-book-edition-notation-left .Carousel__paginationButton--left .Button__container { 
+    margin-left: 0 !important;
+}
+
+.gr-ext-book-edition-notation-left .BookActions .BookRatingStars, .gr-ext-book-edition-notation-left-no-carousel .BookActions .BookRatingStars, 
+.gr-ext-book-edition-notation-left .BookActions__editActivityButton,
 .gr-ext-book-edition-notation-left-no-carousel .BookActions__editActivityButton { display: none !important; }
 
+.gr-ext-book-edition-notation-left .BookCover__image, .gr-ext-book-edition-notation-left-no-carousel .BookCover__image {
+    max-height: 500px !important;
+    text-align: center;
+}
+
+.gr-ext-book-edition-notation-left .BookCover__image img, .gr-ext-book-edition-notation-left-no-carousel .BookCover__image img {
+    width: auto;
+    display: inline-block;
+}
+
+.gr-ext-book-edition-notation-left .Alert.Alert--informational, .gr-ext-book-edition-notation-left-no-carousel .Alert.Alert--informational {
+    padding: 5px;
+    font-size: 1.2rem;
+}
+
+.gr-ext-book-edition-notation-left .MyReviewCard, .gr-ext-book-edition-notation-left-no-carousel .MyReviewCard {
+    justify-content: center !important;
+}
+
+.gr-ext-book-edition-notation-left .Text.Text__title3, .gr-ext-book-edition-notation-left-no-carousel .Text.Text__title3 {
+    text-align: center !important;
+}
+
+.gr-ext-book-edition-notation-left .BookActions__button:nth-of-type(2), .gr-ext-book-edition-notation-left-no-carousel .BookActions__button:nth-of-type(2) { 
+    margin-left: 8px !important;
+}
 
 /* HOME PAGE */
 
@@ -174,3 +240,5 @@
 .content {
     min-height: 101% !important;
 }
+
+.NativeAdWrapper { display: none !important;}
