@@ -1,6 +1,6 @@
 var opts = {};
 const uri = window.location.pathname.split('/');
-var intervalEditions, intervalNotation, localStorageCSS = '', nbBooks = 0;
+var intervalEditions, intervalNotation, localStorageCSS = '', nbBooks = 0, modal, htmlModal;
 
 // Console log to announce extension is working
 console.log('Goodreads enhancement - Loading preferences');
@@ -393,10 +393,43 @@ function bookDetailsEnhancement(showEntireSummary, showAllGenres, showMoreInfoOn
 	}, 500);
 
 	// Friends notations on top
+	document.getElementById('SocialReviews').parentNode.className += ' gr-ext-friends-notation';
+
 	if(friendsNotationOnTop) {
 		getEl('BookPageMetadataSection__ratingStats').after(document.getElementById('SocialReviews').parentElement);
 		document.getElementById('SocialReviews').style.display = 'none';
+
+		setTimeout(() => {
+			// HTML of the modal (if reviews)
+			createModal('reviews-modal', 'Reviews');
+		
+			document.getElementById('open-modal').addEventListener('click', openModal);
+			document.getElementById('modal-close').addEventListener('click', closeModal);
+			window.addEventListener('click', outsideClick);
+
+			document.querySelectorAll('.gr-ext-friends-notation .ReviewCard').forEach(function(review) {
+				document.getElementById('modal-body').append(review);				
+			});
+
+			if(itExists(getEl('gr-ext-friends-notation .ReviewsList__listContext'))) {
+				getEl('gr-ext-friends-notation .ReviewsList__listContext').style.display = 'none';
+			}
+		}, 500);
+		
 	} else {
+	
+		if(itExists(document.getElementById('reviews-modal'))) {
+			document.querySelectorAll('.gr-ext-friends-notation .ReviewCard').forEach(function(review) {
+				document.querySelector('#SocialReviews .Text__title3').after(review)
+			});
+
+			// Remove modal btn
+			document.getElementById('open-modal').remove();
+
+			// Remove modal
+			document.getElementById('reviews-modal').remove();
+		}
+
 		getEl('ReviewsSection__header').after(document.getElementById('SocialReviews').parentElement);
 		document.getElementById('SocialReviews').style.display = 'block';
 	}
@@ -426,13 +459,20 @@ function replaceBookNotation(active) {
 			
 			// Note for anyone reading this : I'm sorry about that. Goodreads does not make things easym I had to trick it. Will improve this in the future
 			let reviewSectionEls = document.getElementById('ReviewsSection').childNodes;
+			let className = '', nbLazyLoader = 0; 
 
 			for (let index = 0; index < reviewSectionEls.length; index++) {
-				if(reviewSectionEls[index].className !== 'WriteReviewCTA' && reviewSectionEls[index].className !== 'Divider Divider--largeMargin'
-					&& reviewSectionEls[index].className !== 'lazyload-wrapper ' && reviewSectionEls[index].className !== 'MyReviewCardCarousel') {
+
+				className = reviewSectionEls[index].className;
+
+				if(className !== 'WriteReviewCTA' && className !== 'Divider Divider--largeMargin' 
+					&& (className !== 'lazyload-wrapper ' || (className === 'lazyload-wrapper ' && nbLazyLoader > 0))
+					&& className !== 'MyReviewCardCarousel') {
 						getEl('BookPage__reviewsSection').append(reviewSectionEls[index]);
 						index--;
-					}
+				}
+
+				if(className === 'lazyload-wrapper ') { nbLazyLoader++; }
 			}
 
 			getEl('BookActions').after(document.getElementById('ReviewsSection'));		
@@ -502,6 +542,62 @@ function setTheme(el, colorValue) {
 //     		MISC FUNCTIONS
 ////////////////////////////////////////////////////
 ////////////////////////////////////////////////////
+
+function createModal(id, headerTitle) {
+	let divBackDropModal = document.createElement('div');
+	divBackDropModal.id = id;
+	divBackDropModal.className = 'modal-backdrop';
+
+	let divModalContent = document.createElement('div');
+	divModalContent.id = 'modal-content';
+
+	let divModalHeader = document.createElement('div');
+	divModalHeader.id = 'modal-header';
+	divModalHeader.textContent = headerTitle;
+	
+	let divModalClose = document.createElement('span');
+	divModalClose.id = 'modal-close';
+	divModalClose.textContent = 'X';
+
+	divModalHeader.appendChild(divModalClose);
+	divModalContent.appendChild(divModalHeader);
+
+	let divModalBody = document.createElement('div');
+	divModalBody.id = 'modal-body';
+
+	divModalContent.appendChild(divModalBody);
+	divBackDropModal.appendChild(divModalContent);
+
+	getEl('gr-ext-friends-notation').appendChild(divBackDropModal);
+	
+	let BtnModal = document.createElement('button');
+	BtnModal.className = 'ShelvingSocialSignalCard';
+	BtnModal.textContent = 'View friends reviews';
+	BtnModal.id = 'open-modal';
+
+	if(itExists(getEl('gr-ext-friends-notation .SignalList'))) {
+		getEl('gr-ext-friends-notation .SignalList').append(BtnModal);
+	} else {
+		getEl('gr-ext-friends-notation #SocialReviews').after(BtnModal);
+	}
+
+		
+}
+
+function openModal(){
+	document.getElementById('reviews-modal').style.display = 'block';
+}
+
+function closeModal(){
+	document.getElementById('reviews-modal').style.display = 'none';
+}
+
+function outsideClick(e){
+	let modal = document.getElementById('reviews-modal');
+	if(e.target == modal){
+		modal.style.display = 'none';
+	}
+}
 
 function getEl(className) {
 	return document.querySelector('.'+className);

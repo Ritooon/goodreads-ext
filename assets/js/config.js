@@ -1,11 +1,9 @@
 let opts = {};
 var waitForEndTyping;
 var saveIndicator = document.getElementById('saveIndicator');
-var firstInstallation;
 
 // Get the options stored
 chrome.storage.sync.get('opts', function(data) {
-	console.log(data.opts)
 	if (data.opts) {
 		for (const property in data) {
 			if(property == 'opts') {
@@ -19,13 +17,6 @@ chrome.storage.sync.get('opts', function(data) {
 				}
 			}
 		}
-	} else {
-		// // First initialisation 
-		// let checkboxes1stInit = document.querySelectorAll('#hideAnnouncements, #expandDetailsCheck, #moveAnnouncementHome, #titleCoverGrid, #bookPageFullSize, #ShowEntireSummary, #ShowAllGenres, #moreInfoOnRight');
-	
-		// for (let i = 0; i < checkboxes1stInit.length; i++) {
-		// 	checkboxes1stInit[i].checked = true;
-		// }
 	}
 });
 

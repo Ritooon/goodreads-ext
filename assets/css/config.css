@@ -5,6 +5,14 @@
 
 /* Inputs */
 
+select {
+    height: 30px;
+    border: 1px solid #ccc;
+    outline: none;
+    padding: 5px 5px;
+    border-radius: 3px;
+}
+
 .checkbox:checked {
     background-color: rgb(63 103 57);
     border-color: rgb(56 101 49);
