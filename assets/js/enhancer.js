@@ -251,7 +251,7 @@ function setExpanded(expand) {
 // Hide announcement top bar (If not home or moveAnnouncementHome is disabled)
 function hideAnnoucements(hide, homeAnnouncementDisplay, actualPage) {
 	
-	let styleDisplay = 'flex', styleDisplayGeneral = 'flex';
+	let styleDisplay = 'flex';
 	localStorageCSS = '';
 	let paddingTop = '10.6rem';
 	
@@ -273,8 +273,8 @@ function hideAnnoucements(hide, homeAnnouncementDisplay, actualPage) {
 		localStorageCSS += `#SiteStrip { display: none !important; }`;
 		paddingTop = '6.6rem';
 	} else {
-		localStorageCSS += `.SiteHeaderBanner { display: flex !important; }`;
-		localStorageCSS += `#SiteStrip { display: flex !important; }`;
+		localStorageCSS += `.SiteHeaderBanner { display: block !important; }`;
+		localStorageCSS += `#SiteStrip { display: block !important; }`;
 		paddingTop = '10.6rem';
 	}
 
@@ -416,10 +416,10 @@ function bookDetailsEnhancement() {
 		let targetChild = nbOfLazyLoaders - 2;
 		console.log(targetChild)
 
-		document.querySelector('.BookPage__relatedBottomContent .lazyload-wrapper:nth-of-type('+targetChild+')').after(document.querySelector('.BookPage__relatedTopContent'));
-		document.querySelector('.BookPage__relatedTopContent .Divider').style.display = 'none';
-
-		
+		if(itExists(document.querySelector('.BookPage__relatedBottomContent .lazyload-wrapper:nth-of-type('+targetChild+')'))) {
+			document.querySelector('.BookPage__relatedBottomContent .lazyload-wrapper:nth-of-type('+targetChild+')').after(document.querySelector('.BookPage__relatedTopContent'));
+			document.querySelector('.BookPage__relatedTopContent .Divider').style.display = 'none';
+		}
 
 		// document.querySelector('.secondRightDiv').append(document.querySelector('.BookPage__relatedTopContent'));
 	}
