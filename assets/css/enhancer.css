@@ -50,10 +50,6 @@
     top: 66px !important;
 }
 
-.gr-ext-bookpage .BookPage__rightColumn {
-    grid-column: span var(--num-custom-col-5) !important;
-}
-
 .secondRightDiv {
     grid-column: span var(--num-custom-col-4);
 }

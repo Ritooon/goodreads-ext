@@ -119,7 +119,7 @@ function setOptions(reset = false) {
 
 	// If on a book page, load enhancements 
 	if(uri[1] === 'book') {
-		bookDetailsEnhancement(opts.ShowEntireSummary, opts.ShowAllGenres, opts.moreInfoOnRight, opts.friendsNotationOnTop);
+		bookDetailsEnhancement();
 	}
 }
 
@@ -251,7 +251,7 @@ function setExpanded(expand) {
 // Hide announcement top bar (If not home or moveAnnouncementHome is disabled)
 function hideAnnoucements(hide, homeAnnouncementDisplay, actualPage) {
 	
-	let styleDisplay = 'flex';
+	let styleDisplay = 'flex', styleDisplayGeneral = 'flex';
 	localStorageCSS = '';
 	let paddingTop = '10.6rem';
 	
@@ -259,18 +259,37 @@ function hideAnnoucements(hide, homeAnnouncementDisplay, actualPage) {
 	if(hide && (!homeAnnouncementDisplay || actualPage != '')) {
 		styleDisplay = 'none';
 		paddingTop = '6.6rem';
-	}	
+	}
 	
 	if(itExists(document.querySelector('.siteHeader__topFullImageContainer'))) {
 		document.querySelector('.siteHeader__topFullImageContainer').setAttribute('style', 'display : '+styleDisplay+' !important');
 	}
-	localStorageCSS += `.siteHeader__topFullImageContainer { display: ${styleDisplay} !important; }`;
-	localStorageCSS += `.SiteHeaderBanner { display: ${styleDisplay} !important; }`;
-	localStorageCSS += `.PageFrame--siteHeaderBanner { padding-top: ${styleDisplay} !important; }`;
+
+	// -- LocalStorage
+	localStorageCSS += `.PageFrame--siteHeaderBanner { padding-top: ${paddingTop} !important; }`;
+
+	if(hide) {
+		localStorageCSS += `.SiteHeaderBanner { display: none !important; }`;
+		localStorageCSS += `#SiteStrip { display: none !important; }`;
+		paddingTop = '6.6rem';
+	} else {
+		localStorageCSS += `.SiteHeaderBanner { display: flex !important; }`;
+		localStorageCSS += `#SiteStrip { display: flex !important; }`;
+		paddingTop = '10.6rem';
+	}
+
+	if(homeAnnouncementDisplay) {
+		localStorageCSS += `.siteHeader__topFullImageContainer { display: ${styleDisplay} !important; }`;
+	}
+	// --
 
 	let siteHeaderEl = document.querySelector('.SiteHeaderBanner');
 	if(itExists(siteHeaderEl)) {
 		document.querySelector('.SiteHeaderBanner').setAttribute('style', 'display : '+styleDisplay);
+
+		if(itExists(document.querySelector('#SiteStrip'))) {
+			document.querySelector('#SiteStrip').setAttribute('style', 'display : '+styleDisplay);
+		}
 
 		if(hide) {
 			document.querySelector('.PageFrame--siteHeaderBanner').style.paddingTop = paddingTop;
@@ -354,7 +373,11 @@ function bookPageFullSize(enabled) {
 ////////////////////////////////////////////////////
 
 // Update the display in a book page to make it better
-function bookDetailsEnhancement(showEntireSummary, showAllGenres, showMoreInfoOnRight, friendsNotationOnTop) {
+function bookDetailsEnhancement() {
+
+	let showEntireSummary = opts.ShowEntireSummary, showAllGenres = opts.ShowAllGenres, showMoreInfoOnRight = opts.moreInfoOnRight
+		, friendsNotationOnTop = opts.friendsNotationOnTop, hideAverageRatings = opts.hideAverageRatings
+
 	// Display entire summary
 	let cssStyle = '';
 	
@@ -379,18 +402,40 @@ function bookDetailsEnhancement(showEntireSummary, showAllGenres, showMoreInfoOn
 	document.querySelector('.PageFrame.PageFrame--siteHeaderBanner').classList.add('gr-ext-bookpage');
 	// 
 	if(showMoreInfoOnRight) {
+		document.querySelector('.gr-ext-bookpage .BookPage__rightColumn').style.cssText =  'grid-column: span var(--num-custom-col-5) !important;';
+
 		let secondRightDiv = document.createElement('div');
 		secondRightDiv.classList.add('secondRightDiv');
 		document.querySelector('.BookPage__rightColumn').after(secondRightDiv);
 		document.querySelector('.secondRightDiv').append(document.querySelector('.AuthorPreview').closest('.PageSection'));
 		document.querySelector('.secondRightDiv').append(document.querySelector('.BookPage__relatedBottomContent'));
-		document.querySelector('.secondRightDiv').append(document.querySelector('.BookPage__relatedTopContent'));
+
+		//
+		let nbOfLazyLoaders = document.querySelectorAll('.BookPage__relatedBottomContent .lazyload-wrapper').length;
+		console.log(nbOfLazyLoaders)
+		let targetChild = nbOfLazyLoaders - 2;
+		console.log(targetChild)
+
+		document.querySelector('.BookPage__relatedBottomContent .lazyload-wrapper:nth-of-type('+targetChild+')').after(document.querySelector('.BookPage__relatedTopContent'));
+		document.querySelector('.BookPage__relatedTopContent .Divider').style.display = 'none';
+
+		
+
+		// document.querySelector('.secondRightDiv').append(document.querySelector('.BookPage__relatedTopContent'));
 	}
 
 	// Trigger scroll 1px to trigger lazyload to load content after moving elements
 	setTimeout(() => {
 		window.scrollTo(0, 1);	
-	}, 500);
+	}, 700);
+
+
+	// Hide average ratings 
+	if(hideAverageRatings) {
+		getEl('BookPageMetadataSection__ratingStats').style.display = 'none';
+	} else {
+		getEl('BookPageMetadataSection__ratingStats').style.display = 'block';
+	}
 
 	// Friends notations on top
 	document.getElementById('SocialReviews').parentNode.className += ' gr-ext-friends-notation';
