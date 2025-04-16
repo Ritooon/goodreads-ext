@@ -79,6 +79,7 @@ chrome.storage.onChanged.addListener(function() {
 // Function whym loop into options saved and call the functions if needed
 function setOptions(reset = false) {
 
+
 	for (const [opt, value] of Object.entries(opts)) {
 		// Option : Expand details on "Show editions" links
 		if(opt == 'expandDetailsCheck') {
@@ -229,17 +230,25 @@ function setExpanded(expand) {
 
 	// Loop each tooltips to find
 	editionLinks.forEach(function(link) {
-		if(link.href.indexOf('editions')) {
+		if(link.href.indexOf('editions') > -1) {
 			
 			// We found a link, so considering elements are loaded in DOM, clear the interval
 			if(intervalEditions != null) {
 				clearInterval(intervalEditions);
 			}
 
+			if(itExists(opts.editionLanguage)) {
+				if(link.href.indexOf('language_code') == -1) {
+					if(link.href.indexOf('?') == -1) { link.href += '?'; } else { link.href += '&'; }
+					link.href += 'filter_by_language='+opts.editionLanguage;
+				}
+			}
+
 			// If option set to true, add parameters to the link
 			if(expand) {
 				if(link.href.indexOf('?expanded=true&per_page=100') == -1) {
-					link.href += '?expanded=true&per_page=100';
+					if(link.href.indexOf('?') == -1) { link.href += '?'; } else { link.href += '&'; }
+					link.href += 'expanded=true&per_page=100';
 				}
 			} else {
 				link.href.replace('?expanded=true&per_page=100', '');
@@ -412,9 +421,7 @@ function bookDetailsEnhancement() {
 
 		//
 		let nbOfLazyLoaders = document.querySelectorAll('.BookPage__relatedBottomContent .lazyload-wrapper').length;
-		console.log(nbOfLazyLoaders)
 		let targetChild = nbOfLazyLoaders - 2;
-		console.log(targetChild)
 
 		if(itExists(document.querySelector('.BookPage__relatedBottomContent .lazyload-wrapper:nth-of-type('+targetChild+')'))) {
 			document.querySelector('.BookPage__relatedBottomContent .lazyload-wrapper:nth-of-type('+targetChild+')').after(document.querySelector('.BookPage__relatedTopContent'));
