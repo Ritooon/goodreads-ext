@@ -112,6 +112,10 @@ function setOptions(reset = false) {
 			// Interval is set, because some pages make a lot of times to add objects to DOM
 			intervalNotation = setInterval(replaceBookNotation, 500, value);
 		}
+		// Option : Hide notations (Hover to reveal)
+		else if(opt == 'hideNotation' && uri[1] === 'book') {
+			hideNotation(value);
+		}
 		// Option : Theme options
 		else if(opt.indexOf('theme') > -1) {
 			setTheme(opt, value);
@@ -425,7 +429,9 @@ function bookDetailsEnhancement() {
 
 		if(itExists(document.querySelector('.BookPage__relatedBottomContent .lazyload-wrapper:nth-of-type('+targetChild+')'))) {
 			document.querySelector('.BookPage__relatedBottomContent .lazyload-wrapper:nth-of-type('+targetChild+')').after(document.querySelector('.BookPage__relatedTopContent'));
-			document.querySelector('.BookPage__relatedTopContent .Divider').style.display = 'none';
+			if(itExists(document.querySelector('.BookPage__relatedTopContent .Divider'))) {	
+				document.querySelector('.BookPage__relatedTopContent .Divider').style.display = 'none';
+			}
 		}
 
 		// document.querySelector('.secondRightDiv').append(document.querySelector('.BookPage__relatedTopContent'));
@@ -439,16 +445,16 @@ function bookDetailsEnhancement() {
 
 	// Hide average ratings 
 	if(hideAverageRatings) {
-		getEl('BookPageMetadataSection__ratingStats').style.display = 'none';
+		getEl('.BookPageMetadataSection__ratingStats').style.display = 'none';
 	} else {
-		getEl('BookPageMetadataSection__ratingStats').style.display = 'block';
+		getEl('.BookPageMetadataSection__ratingStats').style.display = 'block';
 	}
 
 	// Friends notations on top
 	document.getElementById('SocialReviews').parentNode.className += ' gr-ext-friends-notation';
 
 	if(friendsNotationOnTop) {
-		getEl('BookPageMetadataSection__ratingStats').after(document.getElementById('SocialReviews').parentElement);
+		getEl('.BookPageMetadataSection__ratingStats').after(document.getElementById('SocialReviews').parentElement);
 		document.getElementById('SocialReviews').style.display = 'none';
 
 		setTimeout(() => {
@@ -463,8 +469,8 @@ function bookDetailsEnhancement() {
 				document.getElementById('modal-body').append(review);				
 			});
 
-			if(itExists(getEl('gr-ext-friends-notation .ReviewsList__listContext'))) {
-				getEl('gr-ext-friends-notation .ReviewsList__listContext').style.display = 'none';
+			if(itExists(getEl('.gr-ext-friends-notation .ReviewsList__listContext'))) {
+				getEl('.gr-ext-friends-notation .ReviewsList__listContext').style.display = 'none';
 			}
 		}, 500);
 		
@@ -482,7 +488,7 @@ function bookDetailsEnhancement() {
 			document.getElementById('reviews-modal').remove();
 		}
 
-		getEl('ReviewsSection__header').after(document.getElementById('SocialReviews').parentElement);
+		getEl('.ReviewsSection__header').after(document.getElementById('SocialReviews').parentElement);
 		document.getElementById('SocialReviews').style.display = 'block';
 	}
 }
@@ -490,10 +496,10 @@ function bookDetailsEnhancement() {
 function replaceBookNotation(active) {
 	let elToMove = '', classNotationLeft = '';
 	
-	if(itExists(getEl('MyReviewCardCarousel'))) {
+	if(itExists(getEl('.MyReviewCardCarousel'))) {
 		elToMove = 'MyReviewCardCarousel';
 		classNotationLeft = 'gr-ext-book-edition-notation-left';
-	} else if(itExists(getEl('WriteReviewCTA'))) {
+	} else if(itExists(getEl('.WriteReviewCTA'))) {
 		elToMove = 'WriteReviewCTA';
 		classNotationLeft = 'gr-ext-book-edition-notation-left-no-carousel';
 	}
@@ -507,7 +513,7 @@ function replaceBookNotation(active) {
 		// Move notation
 		if(active) {
 			// Inject CSS to update style when it's on the left
-			getEl('BookPage__leftColumn').classList.add(classNotationLeft);
+			getEl('.BookPage__leftColumn').classList.add(classNotationLeft);
 			
 			// Note for anyone reading this : I'm sorry about that. Goodreads does not make things easym I had to trick it. Will improve this in the future
 			let reviewSectionEls = document.getElementById('ReviewsSection').childNodes;
@@ -520,20 +526,75 @@ function replaceBookNotation(active) {
 				if(className !== 'WriteReviewCTA' && className !== 'Divider Divider--largeMargin' 
 					&& (className !== 'lazyload-wrapper ' || (className === 'lazyload-wrapper ' && nbLazyLoader > 0))
 					&& className !== 'MyReviewCardCarousel') {
-						getEl('BookPage__reviewsSection').append(reviewSectionEls[index]);
+						getEl('.BookPage__reviewsSection').append(reviewSectionEls[index]);
 						index--;
 				}
 
 				if(className === 'lazyload-wrapper ') { nbLazyLoader++; }
 			}
 
-			getEl('BookActions').after(document.getElementById('ReviewsSection'));		
+			getEl('.BookActions').after(document.getElementById('ReviewsSection'));		
 			
 		} else {
 			// Remove CSS to update style when it's not on the left
-			getEl('BookPage__leftColumn').classList.remove(classNotationLeft);
+			getEl('.BookPage__leftColumn').classList.remove(classNotationLeft);
 			//
-			getEl('ReviewsSection__header').after(document.getElementById('ReviewsSection'));
+			getEl('.ReviewsSection__header').after(document.getElementById('ReviewsSection'));
+		}
+	}
+}
+
+function hideNotation(active) {
+
+	if(active) {
+
+		// Notiation on top
+		if(itExists(getEl('a.RatingStatistics.RatingStatistics__interactive.RatingStatistics__centerAlign'))) {
+			getEl('a.RatingStatistics.RatingStatistics__interactive.RatingStatistics__centerAlign').classList.add('hideNotations');	
+		}
+
+		// Notion of friends reviews
+		if(itExists(getEl('button.ShelvingSocialSignalCard:not(#open-modal) .RatingStars'))) {
+			getEl('button.ShelvingSocialSignalCard:not(#open-modal) .RatingStars').classList.add('hideNotations');
+		}
+
+		// Other notations
+		const observer = new MutationObserver((mutationsList, observer) => {
+		if (itExists(getEl('.AverageRating__ratingValue'))) {
+				getElAll('.AverageRating__ratingValue').forEach(function (notation) {
+					notation.classList.add('hideNotations');
+				});
+				// Ne pas déconnecter l'observateur ici pour qu'il continue à surveiller les changements
+			}
+		});
+
+		observer.observe(document.body, { childList: true, subtree: true });
+
+		// Notation and reviews bloc 
+		if(itExists(getEl('.BookPage__reviewsSection'))) {
+			getEl('.BookPage__reviewsSection').classList.add('hideNotations');
+		}
+	} else {
+		// Notiation on top
+		if(itExists(getEl('a.RatingStatistics.RatingStatistics__interactive.RatingStatistics__centerAlign'))) {
+			getEl('a.RatingStatistics.RatingStatistics__interactive.RatingStatistics__centerAlign').classList.remove('hideNotations');
+		}
+
+		// Notion of friends reviews
+		if(itExists(getEl('button.ShelvingSocialSignalCard:not(#open-modal) .RatingStars'))) {
+			getEl('button.ShelvingSocialSignalCard:not(#open-modal) .RatingStars').classList.remove('hideNotations');
+		}
+
+		// Other notations
+		if(itExists(getEl('.AverageRating__ratingValue'))) {
+			getElAll('.AverageRating__ratingValue').forEach(function (notation) {
+				notation.classList.remove('hideNotations');
+			});
+		}
+
+		// Notation and reviews bloc 
+		if(itExists(getEl('.BookPage__reviewsSection'))) {
+			getEl('.BookPage__reviewsSection').classList.remove('hideNotations');
 		}
 	}
 }
@@ -620,17 +681,17 @@ function createModal(id, headerTitle) {
 	divModalContent.appendChild(divModalBody);
 	divBackDropModal.appendChild(divModalContent);
 
-	getEl('gr-ext-friends-notation').appendChild(divBackDropModal);
+	getEl('.gr-ext-friends-notation').appendChild(divBackDropModal);
 	
 	let BtnModal = document.createElement('button');
 	BtnModal.className = 'ShelvingSocialSignalCard';
 	BtnModal.textContent = 'View friends reviews';
 	BtnModal.id = 'open-modal';
 
-	if(itExists(getEl('gr-ext-friends-notation .SignalList'))) {
-		getEl('gr-ext-friends-notation .SignalList').append(BtnModal);
+	if(itExists(getEl('.gr-ext-friends-notation .SignalList'))) {
+		getEl('.gr-ext-friends-notation .SignalList').append(BtnModal);
 	} else {
-		getEl('gr-ext-friends-notation #SocialReviews').after(BtnModal);
+		getEl('.gr-ext-friends-notation #SocialReviews').after(BtnModal);
 	}
 
 		
@@ -651,8 +712,12 @@ function outsideClick(e){
 	}
 }
 
-function getEl(className) {
-	return document.querySelector('.'+className);
+function getEl(el) {
+	return document.querySelector(el);
+}
+
+function getElAll(el) {
+	return document.querySelectorAll(el);
 }
 
 // Function to verify if element is present in DOM and avoid js errors

@@ -68,8 +68,71 @@
     margin: auto !important;
 }
 
-.gr-ext-book-edition-notation-left .MyReviewCard__profile, .gr-ext-book-edition-notation-left-no-carousel .MyReviewCard__profile, 
-.gr-ext-book-edition-notation-left .Avatar, .gr-ext-book-edition-notation-left-no-carousel .Avatar { display: none !important; }
+a.RatingStatistics.RatingStatistics__interactive.RatingStatistics__centerAlign { position: relative; }
+
+a.RatingStatistics.RatingStatistics__interactive.RatingStatistics__centerAlign.hideNotations:before {
+    content: "Hover to reveal notation";
+    background: #333;
+    height: 40px;
+    position: absolute;
+    width: 100%;
+    color: #ffffff61;
+    text-align: center;
+    line-height: 40px;
+    border-radius: 5px;
+}
+
+a.RatingStatistics.RatingStatistics__interactive.RatingStatistics__centerAlign.hideNotations:hover:before { display: none; }
+
+button.ShelvingSocialSignalCard:not(#open-modal) .RatingStars { position: relative; }
+
+button.ShelvingSocialSignalCard:not(#open-modal) .RatingStars.hideNotations:before { 
+    content: "Hover to reveal notation";
+    background: #333;
+    height: 20px;
+    position: absolute;
+    width: 100%;
+    color: #ffffff61;
+    text-align: center;
+    line-height: 20px;
+    font-size: 13px;
+    border-radius: 5px;
+}
+
+button.ShelvingSocialSignalCard:not(#open-modal) .RatingStars.hideNotations:hover:before { display: none; }
+
+.AverageRating__ratingValue { position: relative; }
+.AverageRating__ratingValue.hideNotations:before { 
+    content: "";
+    background: #333;
+    height: 20px;
+    position: absolute;
+    width: 100%;
+    color: #ffffff61;
+    text-align: center;
+    line-height: 20px;
+    font-size: 13px;
+    border-radius: 5px;
+}
+.AverageRating__ratingValue.hideNotations:hover:before { display: none; }
+
+.BookPage__reviewsSection { position: relative; }
+.BookPage__reviewsSection.hideNotations:before { 
+    content: "Hover to reveal notation";
+    background: #333;
+    height: 100%;
+    position: absolute;
+    width: 100%;
+    color: #ffffff61;
+    text-align: center;
+    font-size: 50px;
+    border-radius: 5px;
+    z-index: 1;
+}
+.BookPage__reviewsSection.hideNotations:hover:before { display: none; }
+
+/* .gr-ext-book-edition-notation-left .MyReviewCard__profile, .gr-ext-book-edition-notation-left-no-carousel .MyReviewCard__profile, 
+.gr-ext-book-edition-notation-left .Avatar, .gr-ext-book-edition-notation-left-no-carousel .Avatar { display: none !important; } */
 
 .gr-ext-book-edition-notation-left-no-carousel .MyReviewCard__content
 , .gr-ext-book-edition-notation-left .MyReviewCardCarousel:not(:has(.BookCard)) .MyReviewCard__content { grid-column: span 11 !important; }
